@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pronunciation Master - TVU</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    animation: {
+                        fadeIn: 'fadeIn 0.3s ease-out forwards',
+                        slideUp: 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(4px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 w-full border-b backdrop-blur bg-white/80 dark:bg-[#15151e]/80 border-gray-200 dark:border-zinc-800/80 transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('dashboard')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-700 to-purple-400 flex items-center justify-center text-white font-black text-lg shadow-md">
+                    P
+                </div>
+                <div>
+                    <h1 class="text-sm font-black tracking-tight dark:text-white">PRONUNCIATION MASTER</h1>
+                    <p class="text-[9px] text-violet-600 dark:text-violet-400 font-bold tracking-widest uppercase">TVU Foundation</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2.5 rounded-xl bg-gray-100 dark:bg-zinc-800/80 hover:bg-gray-200 dark:hover:bg-zinc-700/80 transition-colors cursor-pointer"></button>
+                <button onclick="openResetModal()" class="px-3.5 py-2 rounded-xl bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950/40 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-rotate-right text-[10px]"></i> Làm mới
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- DASHBOARD -->
+        <div id="view-dashboard" class="space-y-8 animate-fadeIn">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- MCQ CARD -->
+                <div class="group bg-white dark:bg-[#1a1a24] rounded-2xl border border-gray-200 dark:border-zinc-800/80 p-6 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-start">
+                            <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-950/30 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl shadow-inner border border-purple-100 dark:border-purple-900/30">
+                                <i class="fa-solid fa-list-check"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <h4 class="text-xl font-black text-gray-900 dark:text-white group-hover:text-purple-600 transition-colors">Trắc Nghiệm IPA</h4>
+                            <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">Hệ thống 40 câu hỏi trắc nghiệm kiểm tra lý thuyết phát âm, dấu trọng âm và cách đọc các từ vựng cốt lõi. Chấm điểm lập tức.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 dark:border-zinc-800/50">
+                        <button onclick="startPronunciationQuiz('mcq')" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-black transition-all shadow flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-play"></i> BẮT ĐẦU LÀM BÀI
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE CARD -->
+                <div class="group bg-white dark:bg-[#1a1a24] rounded-2xl border border-gray-200 dark:border-zinc-800/80 p-6 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-start">
+                            <div class="w-12 h-12 rounded-xl bg-violet-50 dark:bg-violet-950/30 text-violet-600 dark:text-violet-400 flex items-center justify-center text-xl shadow-inner border border-violet-100 dark:border-violet-900/30">
+                                <i class="fa-solid fa-microphone-lines"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <h4 class="text-xl font-black text-gray-900 dark:text-white group-hover:text-violet-600 transition-colors">Luyện Đọc Thực Tế</h4>
+                            <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">Luyện đọc từ vựng, câu hoàn chỉnh và đoạn văn. Tích hợp AI đọc mẫu với khả năng tùy biến tốc độ, giọng nam/nữ và highlight trọng âm.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 dark:border-zinc-800/50">
+                        <button onclick="startPronunciationQuiz('practice')" class="w-full py-3 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-black transition-all shadow flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-volume-high"></i> BẮT ĐẦU LUYỆN TẬP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MCQ QUIZ VIEW -->
+        <div id="view-mcq-quiz" class="hidden animate-fadeIn">
+            <div class="sticky top-16 z-30 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white/95 dark:bg-[#1a1a24]/95 backdrop-blur-md border border-gray-200 dark:border-zinc-800/80 shadow-sm">
+                <div class="space-y-1">
+                    <h3 class="text-sm font-extrabold dark:text-white text-purple-600 dark:text-purple-400">Trắc nghiệm IPA & Lý thuyết</h3>
+                    <p class="text-[10px] text-gray-500 dark:text-zinc-400">Chọn đáp án để xem giải thích chi tiết ngay lập tức.</p>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <button id="btn-toggle-subtitles" onclick="toggleSubtitles()" class="px-3.5 py-2 rounded-xl bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-800/40 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-language"></i> Phụ đề
+                    </button>
+                    <div class="px-4 py-2 rounded-xl bg-purple-50 dark:bg-purple-950/30 text-purple-700 dark:text-purple-300 text-xs font-black border border-purple-100 dark:border-purple-900/50 flex-1 sm:flex-none text-center" id="live-mcq-score">
+                        Đang thống kê...
+                    </div>
+                    <button onclick="openExitModal()" class="px-3.5 py-2 rounded-xl bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700 text-xs font-bold transition-all cursor-pointer shrink-0">
+                        Thoát
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div class="lg:col-span-8 space-y-6" id="mcq-questions-container"></div>
+                <div class="hidden lg:block lg:col-span-4 sticky top-24 space-y-4">
+                    <div class="p-5 rounded-2xl bg-white dark:bg-[#1a1a24] border border-gray-200 dark:border-zinc-800/80 shadow-sm space-y-4">
+                        <h4 class="text-xs font-black uppercase tracking-wider dark:text-white">Bảng điều hướng</h4>
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="p-3 rounded-xl bg-gray-50 dark:bg-[#15151e] border border-gray-100 dark:border-zinc-800">
+                                <p class="text-[10px] text-gray-400 uppercase font-bold">Đã làm</p>
+                                <span class="text-lg font-black dark:text-white" id="stat-answered-count">0/0</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-purple-50/50 dark:bg-purple-950/10 border border-purple-100 dark:border-purple-900/30">
+                                <p class="text-[10px] text-purple-600 dark:text-purple-400 uppercase font-bold">Đúng</p>
+                                <span class="text-lg font-black text-purple-600 dark:text-purple-400" id="stat-correct-count">0</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-5 gap-2 max-h-64 overflow-y-auto pr-1" id="sidebar-mcq-grid"></div>
+                        <div class="pt-4 border-t border-gray-100 dark:border-zinc-800/50">
+                            <button onclick="openResetModal()" class="w-full py-2.5 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950/40 text-xs font-bold rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-rotate-right"></i> Làm lại bài
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRONUNCIATION PRACTICE VIEW -->
+        <div id="view-pronunciation-practice" class="hidden animate-fadeIn space-y-6">
+            <div class="sticky top-16 z-30 flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-white/95 dark:bg-[#1a1a24]/95 backdrop-blur-md border border-gray-200 dark:border-zinc-800/80 shadow-sm">
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <span class="text-xs font-extrabold text-gray-500 dark:text-zinc-400 uppercase shrink-0">Chọn Bài:</span>
+                    <select id="pron-task-select" onchange="loadSelectedPronunciationTask()" class="flex-1 md:flex-none bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white border border-transparent hover:border-violet-500 rounded-xl px-3 py-1.5 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-violet-500 cursor-pointer">
+                    </select>
+                </div>
+                <div class="flex items-center gap-2 self-end md:self-auto">
+                    <button onclick="openExitModal()" class="px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700 text-xs font-bold transition-all cursor-pointer">
+                        Thoát
+                    </button>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="p-6 rounded-2xl bg-stone-50 dark:bg-[#12121a] text-gray-900 dark:text-white space-y-4 shadow-xl border border-gray-200 dark:border-zinc-800 relative">
+                    <div class="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.15),transparent)] pointer-events-none overflow-hidden"></div>
+                    <div class="relative z-10 space-y-4">
+                        <span class="inline-block px-2.5 py-1 bg-violet-600 text-white rounded font-black text-[9px] uppercase tracking-widest shadow-md" id="pron-task-title">Bài tập</span>
+                        
+                        <div id="audio-controls" class="hidden flex items-center justify-center gap-3 mt-2 mb-4 sticky top-[135px] z-40 bg-white/95 dark:bg-[#1f1f2e]/95 backdrop-blur-md p-3 rounded-2xl border border-gray-200 dark:border-zinc-700/80 shadow-md">
+                            <button onclick="readPrevious()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-violet-100 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 flex items-center justify-center transition-colors cursor-pointer" title="Câu trước">
+                                <i class="fa-solid fa-backward-step"></i>
+                            </button>
+                            <button onclick="readCurrent()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-violet-100 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 flex items-center justify-center transition-colors cursor-pointer" title="Đọc lại câu này">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                            <button id="btn-play-pause" onclick="togglePlaySequence()" class="w-12 h-12 rounded-full bg-violet-600 hover:bg-violet-500 text-white flex items-center justify-center shadow-lg transition-transform active:scale-95 cursor-pointer" title="Phát âm">
+                                <i class="fa-solid fa-play pl-1 text-lg"></i>
+                            </button>
+                            <button onclick="readNext()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-violet-100 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 flex items-center justify-center transition-colors cursor-pointer" title="Câu sau">
+                                <i class="fa-solid fa-forward-step"></i>
+                            </button>
+                        </div>
+
+                        <div class="space-y-2 p-2">
+                            <div id="pron-target-sentence" class="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100 leading-relaxed max-h-96 overflow-y-auto pr-3"></div>
+                            <p class="text-xs font-extrabold text-violet-600 dark:text-violet-400 font-mono tracking-wide hidden" id="pron-target-phonetic"></p>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-white dark:bg-zinc-900/80 text-[11px] text-gray-700 dark:text-zinc-300 leading-relaxed border border-gray-200 dark:border-zinc-800 relative z-20">
+                            <strong class="text-violet-600 dark:text-violet-400"><i class="fa-solid fa-bullseye"></i> Mục tiêu:</strong> <span id="pron-task-guide"></span>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-gray-200 dark:border-zinc-800 relative z-20">
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] text-gray-500 dark:text-zinc-400 font-bold uppercase">Giọng:</span>
+                                <select id="pron-voice-select" class="bg-white dark:bg-zinc-800 text-gray-900 dark:text-white border border-gray-200 dark:border-zinc-700 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-violet-400 cursor-pointer">
+                                    <option value="female" selected>Nữ (Female)</option>
+                                    <option value="male">Nam (Male)</option>
+                                </select>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] text-gray-500 dark:text-zinc-400 font-bold uppercase">Tốc độ:</span>
+                                <select id="pron-speed-select" class="bg-white dark:bg-zinc-800 text-gray-900 dark:text-white border border-gray-200 dark:border-zinc-700 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-violet-400 cursor-pointer">
+                                    <option value="1.0">1.0x (Tự nhiên)</option>
+                                    <option value="0.85">0.85x (Hơi chậm)</option>
+                                    <option value="0.75" selected>0.75x (Chậm)</option>
+                                    <option value="0.5">0.5x (Rất chậm)</option>
+                                </select>
+                            </div>
+
+                            <button id="btn-pron-highlight" onclick="togglePronHighlight()" class="px-4 py-1.5 rounded-lg bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 text-amber-500 dark:text-amber-400 border border-gray-200 dark:border-zinc-700 text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer ml-auto">
+                                <i class="fa-solid fa-highlighter"></i> Bật Highlight
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- TOASTS & MODALS -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <div id="modal-reset" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeResetModal()"></div>
+        <div class="relative bg-white dark:bg-[#1a1a24] rounded-2xl max-w-sm w-full p-6 shadow-xl border border-gray-200 dark:border-zinc-800 animate-slideUp space-y-4">
+            <div class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-950/30 text-red-600 dark:text-red-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="space-y-1.5">
+                <h4 class="text-sm font-black dark:text-white">Xác nhận làm mới bài học?</h4>
+                <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">
+                    Hệ thống sẽ xóa sạch kết quả, xáo trộn lại thứ tự câu hỏi và đưa bạn về bài tập ban đầu.
+                </p>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button onclick="handleResetSession()" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl cursor-pointer">Làm mới</button>
+                <button onclick="closeResetModal()" class="flex-1 py-2.5 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 font-bold text-xs rounded-xl cursor-pointer">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-exit" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeExitModal()"></div>
+        <div class="relative bg-white dark:bg-[#1a1a24] rounded-2xl max-w-sm w-full p-6 shadow-xl border border-gray-200 dark:border-zinc-800 animate-slideUp space-y-4">
+            <div class="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-door-open"></i>
+            </div>
+            <div class="space-y-1.5">
+                <h4 class="text-sm font-black dark:text-white">Bạn muốn rời đi?</h4>
+                <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">
+                    Tiến độ làm bài hiện tại sẽ bị xóa bỏ nếu bạn rời khỏi màn hình này.
+                </p>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button onclick="confirmExit()" class="flex-1 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl cursor-pointer">Rời đi</button>
+                <button onclick="closeExitModal()" class="flex-1 py-2.5 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 font-bold text-xs rounded-xl cursor-pointer">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pronunciationQuestionsData = [
+            {
+                question: "How many phonemes are there in the English language?",
+                question_vi: "Có bao nhiêu âm vị trong tiếng Anh?",
+                options: ["About 24", "About 34", "About 44", "About 54"],
+                answer: 2,
+                explanation: "Có khoảng 44 âm vị trong tiếng Anh, bao gồm 24 phụ âm và 20 nguyên âm."
+            },
+            {
+                question: "How many vowel sounds are there in the English language?",
+                question_vi: "Có bao nhiêu nguyên âm trong tiếng Anh?",
+                options: ["About 20", "About 30", "About 40", "About 50"],
+                answer: 0,
+                explanation: "Hệ thống âm thanh tiếng Anh có xấp xỉ 20 nguyên âm, được chia thành nguyên âm đơn (monophthongs) và nguyên âm đôi (diphthongs)."
+            },
+            {
+                question: "“u” in “blue” is…",
+                question_vi: "Chữ \"u\" trong từ \"blue\" là…",
+                options: ["A phoneme", "A letter", "A consonant", "A syllable"],
+                answer: 1,
+                explanation: "Trong ngữ cảnh đánh vần (spelling), \"u\" chỉ là một chữ cái trong bảng chữ cái đại diện cho âm thanh khi viết."
+            },
+            {
+                question: "What is NOT an element of English pronunciation?",
+                question_vi: "Yếu tố nào KHÔNG thuộc về phát âm tiếng Anh?",
+                options: ["intonation", "phonemes", "spelling", "stress"],
+                answer: 2,
+                explanation: "Các yếu tố chính của phát âm bao gồm âm vị, ngữ điệu, trọng âm và lời nói nối. Đánh vần (spelling) không phải là một yếu tố của phát âm."
+            },
+            {
+                question: "Which of the following sounds is a short mid vowel sound?",
+                question_vi: "Âm nào dưới đây là nguyên âm giữa ngắn?",
+                options: ["/ə/", "/ɒ/", "/æ/", "/ɪ/"],
+                answer: 0,
+                explanation: "Nguyên âm giữa ngắn (/ə/ hoặc /e/) được tạo ra với vị trí lưỡi ở khoảng giữa cao và thấp trong khoang miệng."
+            },
+            {
+                question: "Which of the following words is pronounced as /tʃɪp/?",
+                question_vi: "Từ nào dưới đây được phát âm là /tʃɪp/?",
+                options: ["Ship", "Chip", "Cheap", "Sheep"],
+                answer: 1,
+                explanation: "Ship là /ʃɪp/, Sheep là /ʃiːp/, Cheap là /tʃiːp/, còn Chip là /tʃɪp/."
+            },
+            {
+                question: "Choose the word with different vowel sound:",
+                question_vi: "Chọn từ có nguyên âm khác với các từ còn lại:",
+                options: ["Minor", "Rival", "Trivial", "Sign"],
+                answer: 2,
+                explanation: "Sign /saɪn/, Minor /ˈmaɪnər/, Rival /ˈraɪvəl/ đều mang âm /aɪ/, còn Trivial mang âm /ɪ/."
+            },
+            {
+                question: "Which word does NOT contain /ɪ/ sound?",
+                question_vi: "Từ nào KHÔNG chứa âm /ɪ/?",
+                options: ["Exam", "Erase", "Elect", "Else"],
+                answer: 3,
+                explanation: "Else phát âm là /els/, các từ còn lại đều bắt đầu bằng âm /ɪ/ (Erase /ɪˈreɪz/, Exam /ɪɡˈzæm/, Elect /ɪˈlɛkt/)."
+            },
+            {
+                question: "Which word has a long /ɑː/ sound?",
+                question_vi: "Từ nào chứa âm /ɑː/ dài?",
+                options: ["heard", "heart", "head", "happy"],
+                answer: 1,
+                explanation: "heart được phát âm là /hɑːt/, trong khi heard là /hɜːd/, happy là /ˈhæpi/, head là /hɛd/."
+            },
+            {
+                question: "What is the original spelling of /pi:s/?",
+                question_vi: "Cách viết đúng của phiên âm /pi:s/ là gì?",
+                options: ["peas", "peace", "pieces", "pierce"],
+                answer: 1,
+                explanation: "peace phát âm là /piːs/. Các từ khác có phiên âm khác: pieces /ˈpiːsɪz/, peas /piːz/, pierce /pɪəs/."
+            },
+            {
+                question: "Which word does the IPA transcription /sɔː/ represent?",
+                question_vi: "Phiên âm /sɔː/ đại diện cho từ nào?",
+                options: ["so", "saw", "sow", "sue"],
+                answer: 1,
+                explanation: "saw được phiên âm là /sɔː/. Các từ còn lại: so/sow là /səʊ/, sue là /suː/."
+            },
+            {
+                question: "Which word does NOT contain /i:/ sound?",
+                question_vi: "Từ nào KHÔNG chứa âm /i:/ dài?",
+                options: ["beam", "bread", "lead", "meat"],
+                answer: 1,
+                explanation: "bread phát âm là /brɛd/ (âm ngắn), các từ còn lại đều chứa âm /iː/ dài."
+            },
+            {
+                question: "Which word does the IPA transcription /ɪnˈdiː.sənt/ represent?",
+                question_vi: "Phiên âm /ɪnˈdiː.sənt/ đại diện cho từ nào?",
+                options: ["incident", "indigent", "indignant", "indecent"],
+                answer: 3,
+                explanation: "indecent phát âm là /ɪnˈdiː.sənt/. Các từ khác: incident /ˈɪn.sɪ.dənt/, indigent /ˈɪn.dɪ.dʒənt/, indignant /ɪnˈdɪɡ.nənt/."
+            },
+            {
+                question: "Choose the odd one out:",
+                question_vi: "Chọn từ khác biệt:",
+                options: ["about", "house", "down", "pause"],
+                answer: 3,
+                explanation: "pause mang âm /pɔːz/ (nguyên âm đơn dài), trong khi ba từ còn lại đều mang nguyên âm đôi /aʊ/."
+            },
+            {
+                question: "How are the triphthongs produced?",
+                question_vi: "Nguyên âm ba (triphthongs) được tạo ra như thế nào?",
+                options: ["Gliding from a vowel to a consonant.", "Adding /ə/ sound to some diphthongs.", "Saying two sounds quickly.", "Adding a vowel sound before a diphthong."],
+                answer: 1,
+                explanation: "Tam âm vị (triphthongs) được tạo ra bằng cách thêm âm /ə/ vào sau một số nguyên âm đôi."
+            },
+            {
+                question: "Which is NOT a rising diphthong?",
+                question_vi: "Âm nào KHÔNG phải là nguyên âm đôi hướng lên (rising diphthong)?",
+                options: ["/eɪ/", "/ɔɪ/", "/aʊ/", "/aɪ/"],
+                answer: 2,
+                explanation: "Các âm /eɪ/, /aɪ/, /ɔɪ/ là nguyên âm đôi hướng lên (lưỡi di chuyển từ thấp lên cao), trong khi /aʊ/ bắt đầu từ vị trí thấp và trượt đến vị trí cao hơn nhưng không thuộc nhóm rising."
+            },
+            {
+                question: "Which word does NOT contain /t/ sound?",
+                question_vi: "Từ nào KHÔNG chứa âm /t/?",
+                options: ["water", "wrestle", "looked", "letter"],
+                answer: 1,
+                explanation: "Trong từ wrestle, chữ \"t\" là âm câm (/ˈres.əl/). Trong khi đó looked kết thúc bằng âm /t/ (/lʊkt/)."
+            },
+            {
+                question: "Which word does NOT contain the /d/ sound?",
+                question_vi: "Từ nào KHÔNG chứa âm /d/?",
+                options: ["watched", "rained", "called", "damaged"],
+                answer: 0,
+                explanation: "watched phát âm kết thúc bằng âm /t/ (/wɒtʃt/), các từ còn lại đều kết thúc bằng âm /d/."
+            },
+            {
+                question: "Which word does the IPA transcription /θɪŋk/ represent?",
+                question_vi: "Phiên âm /θɪŋk/ đại diện cho từ nào?",
+                options: ["sink", "thick", "think", "thing"],
+                answer: 2,
+                explanation: "think là /θɪŋk/. Các từ khác: sink /sɪŋk/, thing /θɪŋ/, thick /θɪk/."
+            },
+            {
+                question: "Which of the following sound is voiced?",
+                question_vi: "Âm nào dưới đây là âm hữu thanh (voiced)?",
+                options: ["/f/", "/v/", "/k/", "/p/"],
+                answer: 1,
+                explanation: "Âm hữu thanh (voiced) được tạo ra với sự rung của dây thanh quản. /v/ là âm hữu thanh, còn /p/, /f/, /k/ là âm vô thanh."
+            },
+            {
+                question: "Which is an example of a phonetic transcription?",
+                question_vi: "Ví dụ nào dưới đây là một phiên âm?",
+                options: ["/beautiful/", "/ˈbjuː/tɪ/fəl/", "/ˈbjuː.tɪ.fəl/", "(bjuː.tɪ.fəl)"],
+                answer: 2,
+                explanation: "Lựa chọn /ˈbjuː.tɪ.fəl/ là phiên âm đúng sử dụng Bảng ký hiệu ngữ âm quốc tế (IPA)."
+            },
+            {
+                question: "What is the phonetic notation system used to represent all of the phones in human language?",
+                question_vi: "Hệ thống ký hiệu ngữ âm nào được sử dụng để biểu diễn tất cả các âm thanh trong ngôn ngữ con người?",
+                options: ["API", "IPA", "IAP", "APA"],
+                answer: 1,
+                explanation: "Hệ thống ký hiệu ngữ âm dùng để biểu diễn tất cả các âm thanh là Bảng ký hiệu ngữ âm quốc tế (IPA)."
+            },
+            {
+                question: "How many monophthongs are there in the English language?",
+                question_vi: "Có bao nhiêu nguyên âm đơn trong tiếng Anh?",
+                options: ["12", "4", "8", "16"],
+                answer: 0,
+                explanation: "Trong tiếng Anh có 12 nguyên âm đơn (nguyên âm thuần)."
+            },
+            {
+                question: "How many consonant sounds are there in the English language?",
+                question_vi: "Có bao nhiêu phụ âm trong tiếng Anh?",
+                options: ["About 34", "About 24", "About 54", "About 44"],
+                answer: 1,
+                explanation: "Trong tiếng Anh có khoảng 24 phụ âm."
+            },
+            {
+                question: "Which word has a short /ʌ/ sound?",
+                question_vi: "Từ nào chứa âm /ʌ/ ngắn?",
+                options: ["Fennel", "Finny", "Fanny", "Funnel"],
+                answer: 3,
+                explanation: "Phiên âm: Funnel /ˈfʌnəl/, Finny /ˈfɪni/, Fennel /ˈfɛnəl/, Fanny /ˈfæni/."
+            },
+            {
+                question: "What is the original spelling of /sʌn/?",
+                question_vi: "Cách viết đúng của phiên âm /sʌn/ là gì?",
+                options: ["Soon", "Sung", "Suns", "Son"],
+                answer: 3,
+                explanation: "Phiên âm: Son /sʌn/, Soon /suːn/, Sung /sʌŋ/, Suns /sʌnz/."
+            },
+            {
+                question: "Which of the following sounds is a short open vowel sound?",
+                question_vi: "Âm nào dưới đây là nguyên âm mở ngắn?",
+                options: ["/ə/", "/ʌ/", "/ʊ/", "/e/"],
+                answer: 1,
+                explanation: "Nguyên âm mở ngắn (/ɒ/, /ʌ/, hoặc /æ/) được tạo ra với vị trí lưỡi đặt thấp."
+            },
+            {
+                question: "Which of the following sounds is NOT a short open vowel sound?",
+                question_vi: "Âm nào dưới đây KHÔNG phải là nguyên âm mở ngắn?",
+                options: ["/ɒ/", "/æ/", "/ʌ/", "/ə/"],
+                answer: 3,
+                explanation: "Âm /ə/ không phải là nguyên âm mở ngắn. Đây là một nguyên âm giữa ngắn."
+            },
+            {
+                question: "Which word does NOT contain short /ʊ/ sound?",
+                question_vi: "Từ nào KHÔNG chứa âm /ʊ/ ngắn?",
+                options: ["Hood", "Food", "Book", "Look"],
+                answer: 1,
+                explanation: "Phiên âm: Book /bʊk/, Look /lʊk/, Food /fuːd/, Hood /hʊd/."
+            },
+            {
+                question: "Which of the following sounds is a short close vowel sound?",
+                question_vi: "Âm nào dưới đây là nguyên âm đóng ngắn?",
+                options: ["/ʌ/", "/ʊ/", "/e/", "/ə/"],
+                answer: 1,
+                explanation: "Nguyên âm đóng ngắn (/ɪ/ hoặc /ʊ/) được tạo ra với vị trí lưỡi đặt cao."
+            },
+            {
+                question: "Which word has a short /æ/ sound?",
+                question_vi: "Từ nào chứa âm /æ/ ngắn?",
+                options: ["Baht", "Babe", "Bait", "Bash"],
+                answer: 3,
+                explanation: "Phiên âm: Babe /beɪb/, Bait /beɪt/, Bash /bæʃ/, Baht /bɑːt/."
+            },
+            {
+                question: "What is the original spelling of /ɪkˈsɛpt/?",
+                question_vi: "Cách viết đúng của phiên âm /ɪkˈsɛpt/ là gì?",
+                options: ["Accept", "Escape", "Exceed", "Except"],
+                answer: 3,
+                explanation: "Phiên âm: Accept /əkˈsɛpt/, Exceed /ɪkˈsiːd/, Escape /ɪˈskeɪp/, Except /ɪkˈsɛpt/."
+            },
+            {
+                question: "Which category best describes the vowels /ǝ/ and /ɜː/?",
+                question_vi: "Nhóm nào mô tả đúng nhất nguyên âm /ǝ/ và /ɜː/?",
+                options: ["Back vowels", "Central vowels", "Diphthongs", "Front vowels"],
+                answer: 1,
+                explanation: "Cả hai nguyên âm /ǝ/ và /ɜː/ đều thuộc nhóm nguyên âm trung tâm (central vowels)."
+            },
+            {
+                question: "What best describes the tongue position for the /ɑː/ sound?",
+                question_vi: "Mô tả nào đúng nhất về vị trí lưỡi đối với âm /ɑː/?",
+                options: ["Low central position", "Mid back position", "Low back position", "Mid–low back position"],
+                answer: 2,
+                explanation: "Âm /ɑː/ được phát âm với vị trí lưỡi đặt thấp và lùi về phía sau khoang miệng."
+            },
+            {
+                question: "The vowels /iː/ and /i/ are classified as:",
+                question_vi: "Các nguyên âm /iː/ và /i/ được phân loại là:",
+                options: ["Back vowels", "Front vowels", "Mid vowels", "Central vowels"],
+                answer: 1,
+                explanation: "Các nguyên âm /iː/ và /i/ được phân loại là nguyên âm trước (front vowels)."
+            },
+            {
+                question: "Which of the following sounds is a long open vowel?",
+                question_vi: "Âm nào dưới đây là nguyên âm mở dài?",
+                options: ["/iː/", "/ɔː/", "/ɑː/", "/ɜː/"],
+                answer: 2,
+                explanation: "Âm /ɑː/ là một nguyên âm mở (thấp) phía sau."
+            },
+            {
+                question: "The vowels /uː/ and /ʊ/ are categorized as:",
+                question_vi: "Các âm /uː/ và /ʊ/ được phân loại là:",
+                options: ["Back vowels", "Central vowels", "Front vowels", "Diphthongs"],
+                answer: 0,
+                explanation: "Các âm /uː/ và /ʊ/ được xếp vào nhóm nguyên âm sau (back vowels)."
+            },
+            {
+                question: "Which of the following sounds is NOT a long close vowels?",
+                question_vi: "Âm nào dưới đây KHÔNG phải là nguyên âm đóng dài?",
+                options: ["/iː/", "/uː/", "/ɑː/"],
+                answer: 2,
+                explanation: "Âm /ɑː/ là nguyên âm mở (thấp) phía sau, không phải nguyên âm đóng."
+            },
+            {
+                question: "What is the primary characteristic of the vowels /ʌ/ and /ɑː/?",
+                question_vi: "Đặc điểm chính của các nguyên âm /ʌ/ và /ɑː/ là gì?",
+                options: ["They are open vowels", "They are front vowels", "They are close vowels", "They are diphthongs"],
+                answer: 0,
+                explanation: "Chúng là các nguyên âm mở, còn được gọi là nguyên âm thấp."
+            },
+            {
+                question: "Which word has a long /ɑː/ sound?",
+                question_vi: "Từ nào chứa âm /ɑː/ dài?",
+                options: ["heard", "heart", "head", "happy"],
+                answer: 1,
+                explanation: "Phiên âm: heart /hɑːt/, heard /hɜːd/, happy /ˈhæpi/, head /hɛd/."
+            }
+        ];
+
+        const pronunciationPracticeTasks = [
+            {
+                title: "PART 1: Read aloud words and phrases",
+                sentence: "hatchery\nstrength\nidea\ntraffic\nextremes",
+                phonetic: "/ˈhætʃ.ər.i/\n/streŋθ/\n/aɪˈdiːə/\n/ˈtræf.ɪk/\n/ɪkˈstriːm/",
+                guide: "Đọc to các từ và cụm từ kèm theo phiên âm quốc tế (IPA).",
+                highlighted: "<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Hatch</span>ery\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Strength</span>\ni<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>De</span>a\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Traf</span>fic\nex<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Tremes</span>"
+            },
+            {
+                title: "PART 2: Read aloud the following sentences",
+                sentence: "Did you finish your homework on time?\nWhat are you doing this weekend?\nYou are our new art teacher, aren’t you?\nPlease pass me the salt and pepper shakers.\nShe bought apples, oranges, and bananas from the market.",
+                phonetic: "Chú ý đến ngữ điệu và trọng âm",
+                guide: "Đọc to các câu sau, chú ý đến ngữ điệu và trọng âm câu.",
+                highlighted: "Did you <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fin</span>ish your <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>home</span>work on <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>time</span>?\nWhat are you <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>do</span>ing this <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>week</span>end?\nYou are our <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>new</span> <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>art</span> teacher, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ar</span>en’t you?\nPlease <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>pass</span> me the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>salt</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>pep</span>per shakers.\nShe bought <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ap</span>ples, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>or</span>anges, and ba<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>na</span>nas from the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>mar</span>ket."
+            },
+            {
+                title: "PART 3: Passage 1 (Scarecrow)",
+                sentence: "A farmer had a large field where he grew corn. Every year, he faced difficulties protecting his crops from birds, which would swoop down and feast on the corn. One summer, after many failed attempts to keep the birds away, he decided to build a scarecrow. To his surprise, the scarecrow not only scared the birds away but also became a landmark in the village. People from nearby towns came to see the scarecrow, admiring its craftsmanship and effectiveness. The farmer's corn harvest improved greatly, yielding more than ever before. Encouraged by his success, the farmer shared his scarecrow design with other farmers, helping them protect their crops as well. The village celebrated the innovation, and the farmer gained recognition for his clever solution.",
+                guide: "Đọc to đoạn văn ngắn để luyện khả năng phát âm trôi chảy và diễn cảm.",
+                highlighted: "A <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>far</span>mer had a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>large field</span> where he <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>grew corn</span>. Every <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>year</span>, he faced <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>dif</span>ficulties pro<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>tect</span>ing his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>crops</span> from <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>birds</span>, which would <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>swoop down</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>feast</span> on the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>corn</span>. One <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>sum</span>mer, after <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ma</span>ny <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>failed</span> at<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>tempts</span> to <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>keep</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>birds a</span>way, he de<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cid</span>ed to <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>build</span> a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>scare</span>crow. To his sur<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>prise</span>, the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>scare</span>crow <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>not on</span>ly <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>scared</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>birds a</span>way but <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>al</span>so be<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>came</span> a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>land</span>mark in the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>vil</span>lage. <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Peo</span>ple from <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>near</span>by <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>towns came</span> to <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>see</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>scare</span>crow, ad<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>mir</span>ing its <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>crafts</span>manship and ef<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fec</span>tiveness. The <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>far</span>mer's <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>corn har</span>vest im<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>proved great</span>ly, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>yield</span>ing <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>more</span> than <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ev</span>er be<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fore</span>. En<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cour</span>aged by his suc<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cess</span>, the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>far</span>mer <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>shared</span> his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>scare</span>crow de<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>sign</span> with <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>oth</span>er <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>far</span>mers, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>help</span>ing them pro<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>tect</span> their <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>crops</span> as <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>well</span>. The <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>vil</span>lage <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cel</span>ebrated the inno<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>va</span>tion, and the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>far</span>mer <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>gained</span> recog<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ni</span>tion for his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>clev</span>er so<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>lu</span>tion."
+            },
+            {
+                title: "PART 3: Passage 2 (Forest Animals)",
+                sentence: "In a quiet forest, there lived a group of animals who were best friends. They played together every day, exploring the woods, and helping each other in times of need. One day, a heavy storm hit the forest, and the animals took shelter in a cave, huddling together for warmth and safety. Inside the cave, they shared food, told stories, and kept each other entertained to pass the time. After the storm passed, the animals emerged to find their homes damaged by the wind and rain. Undeterred, they worked together to repair their homes, each animal contributing their unique skills. The experience of overcoming adversity together strengthened their bond and made their friendship even stronger. From that day on, they knew that no matter what challenges came their way, they could always count on each other.",
+                guide: "Đọc to đoạn văn ngắn để luyện khả năng phát âm trôi chảy và diễn cảm.",
+                highlighted: "In a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>qui</span>et <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>for</span>est, there <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>lived</span> a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>group</span> of <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>an</span>imals who were <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>best friends</span>. They <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>played</span> to<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>geth</span>er every <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>day</span>, ex<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>plor</span>ing the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>woods</span>, and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>help</span>ing <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>each oth</span>er in <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>times</span> of <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>need</span>. One <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>day</span>, a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>heav</span>y <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>storm hit</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>for</span>est, and the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>an</span>imals <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>took shel</span>ter in a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cave</span>, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hud</span>dling to<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>geth</span>er for <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>warmth</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>safe</span>ty. In<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>side</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cave</span>, they <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>shared food</span>, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>told sto</span>ries, and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>kept</span> each <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>oth</span>er enter<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>tained</span> to <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>pass</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>time</span>. <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Af</span>ter the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>storm passed</span>, the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>an</span>imals e<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>merged</span> to <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>find</span> their <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>homes dam</span>aged by the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>wind</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>rain</span>. Unde<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>terred</span>, they <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>worked</span> to<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>geth</span>er to re<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>pair</span> their <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>homes</span>, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>each an</span>imal con<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>trib</span>uting their u<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>nique skills</span>. The ex<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>pe</span>rience of over<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>com</span>ing ad<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ver</span>sity to<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>geth</span>er <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>strength</span>ened their <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>bond</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>made</span> their <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>friend</span>ship <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>e</span>ven <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>strong</span>er. From <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>that day on</span>, they <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>knew</span> that <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>no mat</span>ter <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>what chal</span>lenges <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>came</span> their <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>way</span>, they could <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>al</span>ways <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>count on</span> each <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>oth</span>er."
+            },
+            {
+                title: "PART 3: Passage 3 (Tom's Treasure)",
+                sentence: "A young boy named Tom loved exploring the woods near his home. He spent his days wandering through the trees, discovering new paths and hidden corners of the forest. One day, while venturing further than usual, he stumbled upon an old map tucked inside a hollow tree. The map led to a hidden treasure, and Tom's heart raced with excitement as he followed the clues. After hours of searching, he discovered an ancient chest filled with gold coins and jewels buried beneath a large oak tree. Overwhelmed with joy, Tom shared the treasure with his family, who used the wealth to improve their village. They built new houses, repaired the school, and created a beautiful park for everyone to enjoy. The villagers honored Tom for his bravery and generosity, and his discovery brought prosperity and happiness to the entire community.",
+                guide: "Đọc to đoạn văn ngắn để luyện khả năng phát âm trôi chảy và diễn cảm.",
+                highlighted: "A <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>young boy named Tom loved</span> ex<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>plor</span>ing the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>woods near</span> his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>home</span>. He <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>spent</span> his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>days wan</span>dering <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>through</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>trees</span>, dis<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cov</span>ering <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>new paths</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hid</span>den <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cor</span>ners of the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>for</span>est. One <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>day</span>, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>while ven</span>turing <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fur</span>ther than <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>u</span>sual, he <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>stum</span>bled up<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>on</span> an <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>old map tucked</span> in<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>side</span> a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hol</span>low <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>tree</span>. The <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>map led</span> to a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hid</span>den <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>treas</span>ure, and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Tom's heart raced</span> with ex<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cite</span>ment as he <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fol</span>lowed the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>clues</span>. <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Af</span>ter <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hours</span> of <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>search</span>ing, he dis<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cov</span>ered an <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>an</span>cient <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>chest filled</span> with <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>gold coins</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>jew</span>els <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>bur</span>ied be<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>neath</span> a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>large oak tree</span>. Over<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>whelmed</span> with <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>joy</span>, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Tom shared</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>treas</span>ure with his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fam</span>ily, who <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>used</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>wealth</span> to im<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>prove</span> their <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>vil</span>lage. They <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>built new hous</span>es, re<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>paired</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>school</span>, and cre<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>at</span>ed a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>beau</span>tiful <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>park</span> for <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ev</span>eryone to en<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>joy</span>. The <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>vil</span>lagers <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hon</span>ored <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Tom</span> for his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>brav</span>ery and gener<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>os</span>ity, and his dis<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cov</span>ery <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>brought</span> pros<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>per</span>ity and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hap</span>piness to the en<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>tire</span> com<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>mu</span>nity."
+            }
+        ];
+
+        const state = {
+            darkMode: false,
+            activeTab: 'dashboard',
+            activeMcqQuestions: [],
+            mcqAnswers: {}, 
+            mcqFlags: {},
+            showSubtitles: false,
+            currentPronunciationPractice: [],
+            selectedPronunciationPracticeIndex: 0,
+            isPronHighlightOn: false,
+            currentSentenceIndex: 0
+        };
+
+        function getEl(id) { return document.getElementById(id); }
+
+        function showToast(message, type = 'info') {
+            const container = getEl('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `px-4 py-3 rounded-xl shadow-lg text-xs font-bold text-white transition-all duration-300 transform translate-y-2 opacity-0 flex items-center gap-2 pointer-events-auto bg-zinc-900 border border-zinc-700 animate-slideUp`;
+            
+            let icon = '<i class="fa-solid fa-info text-blue-400"></i>';
+            if (type === 'success') icon = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
+            if (type === 'error') icon = '<i class="fa-solid fa-circle-exclamation text-red-400"></i>';
+            
+            toast.innerHTML = `${icon} <span>${message}</span>`;
+            container.appendChild(toast);
+            
+            setTimeout(() => { toast.classList.remove('opacity-0', 'translate-y-2'); }, 10);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function toggleDarkMode() {
+            state.darkMode = !state.darkMode;
+            const body = document.body;
+            const themeToggle = getEl('theme-toggle');
+            
+            if (state.darkMode) {
+                body.classList.add('dark', 'bg-[#121212]', 'text-white');
+                body.classList.remove('bg-gray-50', 'text-gray-900');
+                themeToggle.innerHTML = `<svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`;
+            } else {
+                body.classList.remove('dark', 'bg-[#121212]', 'text-white');
+                body.classList.add('bg-gray-50', 'text-gray-900');
+                themeToggle.innerHTML = `<svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>`;
+            }
+        }
+
+        function getShuffledClone(arr) {
+            let clone = JSON.parse(JSON.stringify(arr));
+            for (let i = clone.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [clone[i], clone[j]] = [clone[j], clone[i]];
+            }
+            return clone;
+        }
+
+        function toggleSubtitles() {
+            state.showSubtitles = !state.showSubtitles;
+            const btn = getEl('btn-toggle-subtitles');
+            if (state.showSubtitles) {
+                btn.classList.add('bg-violet-600', 'text-white');
+                btn.classList.remove('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-700', 'dark:text-purple-300');
+            } else {
+                btn.classList.remove('bg-violet-600', 'text-white');
+                btn.classList.add('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-700', 'dark:text-purple-300');
+            }
+            renderQuestionsList();
+        }
+
+        function switchView(view) {
+            state.activeTab = view;
+            getEl('view-dashboard').classList.add('hidden');
+            getEl('view-mcq-quiz').classList.add('hidden');
+            getEl('view-pronunciation-practice').classList.add('hidden');
+            
+            if (view === 'dashboard') getEl('view-dashboard').classList.remove('hidden');
+            else if (view === 'mcq') getEl('view-mcq-quiz').classList.remove('hidden');
+            else if (view === 'practice') getEl('view-pronunciation-practice').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startPronunciationQuiz(mode) {
+            if (mode === 'mcq') {
+                state.mcqAnswers = {};
+                state.mcqFlags = {};
+                state.activeMcqQuestions = getShuffledClone(pronunciationQuestionsData);
+                renderSidebarGrids();
+                renderQuestionsList();
+                updateLiveStats();
+                switchView('mcq');
+            } else if (mode === 'practice') {
+                state.currentPronunciationPractice = getShuffledClone(pronunciationPracticeTasks);
+                populatePronunciationSelector();
+                loadSelectedPronunciationTask();
+                switchView('practice');
+            }
+        }
+
+        function handleSelectOption(qIdx, optIdx) {
+            if (state.mcqAnswers[qIdx] !== undefined) return;
+            state.mcqAnswers[qIdx] = optIdx;
+            
+            const qData = state.activeMcqQuestions[qIdx];
+            const correctOpt = qData.answer;
+            const isCorrect = optIdx === correctOpt;
+            
+            const fbBadge = getEl(`feedback-badge-${qIdx}`);
+            fbBadge.innerHTML = isCorrect 
+                ? `<span class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-400">CHÍNH XÁC</span>`
+                : `<span class="text-[10px] font-black px-2 py-0.5 rounded bg-red-100 dark:bg-red-950/40 text-red-800 dark:text-red-400">SAI RỒI</span>`;
+            
+            for (let i = 0; i < qData.options.length; i++) {
+                const btn = getEl(`opt-${qIdx}-${i}`);
+                const dot = getEl(`dot-${qIdx}-${i}`);
+                btn.classList.remove('hover:border-violet-600', 'cursor-pointer');
+                btn.classList.add('cursor-not-allowed');
+                
+                if (i === correctOpt) {
+                    btn.className = "flex items-center gap-3 p-3.5 rounded-xl border text-xs md:text-sm transition-all select-none border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-900 dark:text-emerald-400 font-semibold cursor-not-allowed";
+                    dot.className = "w-5 h-5 rounded-full border flex items-center justify-center shrink-0 border-emerald-500 bg-emerald-500";
+                } else if (i === optIdx) {
+                    btn.className = "flex items-center gap-3 p-3.5 rounded-xl border text-xs md:text-sm transition-all select-none border-red-500 bg-red-50 dark:bg-red-950/20 text-red-900 dark:text-red-400 font-semibold cursor-not-allowed";
+                    dot.className = "w-5 h-5 rounded-full border flex items-center justify-center shrink-0 border-red-500 bg-red-500";
+                } else {
+                    btn.className = "flex items-center gap-3 p-3.5 rounded-xl border text-xs md:text-sm transition-all select-none border-gray-100 dark:border-zinc-850 bg-gray-50/50 dark:bg-zinc-900/50 text-gray-400 dark:text-zinc-600 cursor-not-allowed";
+                    dot.className = "w-5 h-5 rounded-full border flex items-center justify-center shrink-0 border-gray-200 dark:border-zinc-800";
+                }
+            }
+            
+            const expBlock = getEl(`explanation-block-${qIdx}`);
+            expBlock.classList.remove('hidden');
+            expBlock.classList.add('animate-fadeIn');
+            
+            updateLiveStats();
+            renderSidebarGrids();
+        }
+
+        function toggleFlag(qIdx) {
+            state.mcqFlags[qIdx] = !state.mcqFlags[qIdx];
+            const badge = getEl(`card-flag-badge-${qIdx}`);
+            const btn = getEl(`flag-btn-${qIdx}`);
+            
+            if (state.mcqFlags[qIdx]) {
+                badge.classList.remove('hidden');
+                btn.innerHTML = `<i class="fa-solid fa-flag text-amber-400"></i> Hủy gắn cờ`;
+            } else {
+                badge.classList.add('hidden');
+                btn.innerHTML = `<i class="fa-regular fa-flag"></i> Gắn cờ câu hỏi`;
+            }
+            renderSidebarGrids();
+        }
+
+        function scrollToQuestion(index) {
+            const el = getEl(`question-card-${index}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function renderSidebarGrids() {
+            const pcGrid = getEl('sidebar-mcq-grid');
+            let gridHtml = '';
+            state.activeMcqQuestions.forEach((_, idx) => {
+                const isAns = state.mcqAnswers[idx] !== undefined;
+                const isFlg = state.mcqFlags[idx];
+                
+                let btnStyle = "bg-[#1A1A1A] hover:bg-zinc-850 text-white border-zinc-800";
+                if (isAns) btnStyle = "bg-violet-600 text-white border-transparent hover:bg-violet-500";
+
+                gridHtml += `
+                    <button onclick="scrollToQuestion(${idx})" class="flex items-center justify-between p-2 md:p-2.5 rounded-lg border text-white transition-all duration-150 cursor-pointer text-xs font-bold ${btnStyle}">
+                        <span>${idx + 1}</span>
+                        <i class="fa-solid fa-flag ${isFlg ? 'text-amber-400' : 'text-zinc-500'} text-[10px]"></i>
+                    </button>
+                `;
+            });
+            if (pcGrid) pcGrid.innerHTML = gridHtml;
+        }
+
+        function renderQuestionsList() {
+            const container = getEl('mcq-questions-container');
+            let listHtml = '';
+            state.activeMcqQuestions.forEach((q, idx) => {
+                const selOpt = state.mcqAnswers[idx];
+                const isAns = selOpt !== undefined;
+                const isCor = isAns && selOpt === q.answer;
+                const hasFlg = state.mcqFlags[idx];
+
+                listHtml += `
+                    <div id="question-card-${idx}" class="p-4 md:p-6 rounded-xl border shadow-sm transition-all relative bg-white dark:bg-[#1a1a24] text-gray-900 dark:text-white border-gray-200 dark:border-zinc-800/80">
+                        <div id="card-flag-badge-${idx}" class="absolute top-0 right-4 transform -translate-y-1/2 bg-amber-400 text-gray-950 font-bold px-3 py-1 text-[10px] rounded-full flex items-center gap-1 shadow-md z-10 ${hasFlg ? '' : 'hidden'}">
+                            <i class="fa-solid fa-flag"></i> ĐÃ GẮN CỜ
+                        </div>
+
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="font-extrabold text-sm text-violet-600 dark:text-violet-400">Câu ${idx + 1}:</span>
+                                <span id="feedback-badge-${idx}">
+                                    ${isAns ? (isCor ? '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">CHÍNH XÁC</span>' : '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-red-100 text-red-800">SAI RỒI</span>') : ''}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="font-bold text-sm md:text-base text-gray-900 dark:text-white mb-4 leading-relaxed">
+                            <span>${q.question}</span>
+                            ${state.showSubtitles && q.question_vi ? `<div class="text-xs md:text-sm text-violet-600 dark:text-violet-400 mt-1.5 italic">${q.question_vi}</div>` : ''}
+                        </div>
+
+                        <div class="space-y-2.5">
+                            ${q.options.map((option, optIdx) => {
+                                const letter = String.fromCharCode(65 + optIdx);
+                                const isThisSel = selOpt === optIdx;
+                                const isThisCor = q.answer === optIdx;
+                                
+                                let optCls = "border-gray-200 dark:border-zinc-800 bg-white dark:bg-[#1a1a24] text-gray-800 dark:text-zinc-200 hover:border-violet-500 cursor-pointer";
+                                let dotCls = "border-gray-300 dark:border-zinc-750";
+
+                                if (isAns) {
+                                    if (isThisCor) {
+                                        optCls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-900 dark:text-emerald-400 font-semibold cursor-not-allowed";
+                                        dotCls = "border-emerald-500 bg-emerald-500";
+                                    } else if (isThisSel) {
+                                        optCls = "border-red-500 bg-red-50 dark:bg-red-950/20 text-red-900 dark:text-red-400 font-semibold cursor-not-allowed";
+                                        dotCls = "border-red-500 bg-red-500";
+                                    } else {
+                                        optCls = "border-gray-100 dark:border-zinc-850 bg-gray-50/50 dark:bg-zinc-900/50 text-gray-400 dark:text-zinc-600 cursor-not-allowed";
+                                        dotCls = "border-gray-200 dark:border-zinc-800";
+                                    }
+                                }
+
+                                return `
+                                    <div id="opt-${idx}-${optIdx}" onclick="handleSelectOption(${idx}, ${optIdx})" class="flex items-center gap-3 p-3.5 rounded-xl border text-xs md:text-sm transition-all select-none ${optCls}">
+                                        <div id="dot-${idx}-${optIdx}" class="w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${dotCls}">
+                                            ${isThisSel ? '<div class="w-2.5 h-2.5 rounded-full bg-white"></div>' : ''}
+                                        </div>
+                                        <span class="font-extrabold">${letter}.</span>
+                                        <span class="flex-1 leading-snug">${option}</span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        <div id="explanation-block-${idx}" class="mt-4 p-3.5 rounded-xl border border-emerald-200 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-950 dark:text-emerald-400 text-xs md:text-sm ${isAns ? '' : 'hidden'}">
+                            <div class="flex items-center gap-2 font-bold mb-1 text-emerald-700 dark:text-emerald-400">
+                                <i class="fa-solid fa-circle-check"></i> Đáp án chính xác là: ${String.fromCharCode(65 + q.answer)}
+                            </div>
+                            <p class="leading-relaxed"><span class="font-bold">Giải thích:</span> ${q.explanation}</p>
+                        </div>
+
+                        <div class="flex justify-between items-center border-t border-gray-100 dark:border-zinc-800/60 pt-3 mt-4">
+                            <button id="flag-btn-${idx}" onclick="toggleFlag(${idx})" class="flex items-center gap-1.5 text-xs text-gray-500 hover:text-amber-400 transition-colors cursor-pointer">
+                                <i class="fa-${hasFlg ? 'solid' : 'regular'} fa-flag ${hasFlg ? 'text-amber-400' : 'text-gray-400'}"></i>
+                                ${hasFlg ? 'Hủy gắn cờ' : 'Gắn cờ câu hỏi'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = listHtml;
+        }
+
+        function updateLiveStats() {
+            let correct = 0, answered = 0;
+            state.activeMcqQuestions.forEach((q, idx) => {
+                if (state.mcqAnswers[idx] !== undefined) {
+                    answered++;
+                    if (state.mcqAnswers[idx] === q.answer) correct++;
+                }
+            });
+            const total = state.activeMcqQuestions.length;
+            
+            getEl('live-mcq-score').innerText = `Đúng: ${correct}/${answered} câu`;
+            getEl('stat-answered-count').innerText = `${answered}/${total}`;
+            getEl('stat-correct-count').innerText = `${correct}`;
+        }
+
+        function populatePronunciationSelector() {
+            const select = getEl('pron-task-select');
+            select.innerHTML = state.currentPronunciationPractice.map((task, idx) => 
+                `<option value="${idx}">${task.title}</option>`
+            ).join('');
+        }
+
+        function loadSelectedPronunciationTask() {
+            const idx = parseInt(getEl('pron-task-select').value, 10);
+            state.selectedPronunciationPracticeIndex = idx;
+            const task = state.currentPronunciationPractice[idx];
+            
+            getEl('pron-task-title').innerText = task.title;
+            getEl('pron-task-guide').innerText = task.guide;
+            state.isPronHighlightOn = false;
+            state.currentSentenceIndex = 0;
+
+            const btnHL = getEl('btn-pron-highlight');
+            btnHL.className = "px-4 py-1.5 rounded-lg bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 text-amber-500 dark:text-amber-400 border border-gray-200 dark:border-zinc-700 text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer ml-auto";
+            btnHL.innerHTML = `<i class="fa-solid fa-highlighter"></i> Bật Highlight`;
+
+            const container = getEl('pron-target-sentence');
+            const audioControls = getEl('audio-controls');
+            const phoneEl = getEl('pron-target-phonetic');
+
+            if (task.title.includes("PART 3")) {
+                if(audioControls) {
+                    audioControls.classList.remove('hidden');
+                    audioControls.classList.add('flex');
+                }
+                phoneEl.classList.add('hidden');
+                
+                const sents = task.sentence.match(/[^.?!]+[.?!]+/g).map(s => s.trim());
+                container.innerHTML = sents.map((s, i) => `<span id="pron-sent-${i}" onclick="selectSentence(${i})" class="transition-all duration-300 inline-block mr-1 leading-loose cursor-pointer hover:bg-violet-100 dark:hover:bg-zinc-800 rounded px-1">${s}</span> `).join('');
+            } else {
+                if(audioControls) {
+                    audioControls.classList.add('hidden');
+                    audioControls.classList.remove('flex');
+                }
+                phoneEl.classList.add('hidden'); 
+                
+                const sents = task.sentence.split('\n');
+                const phons = task.phonetic ? task.phonetic.split('\n') : [];
+                container.innerHTML = '<div class="space-y-3">' + sents.map((s, i) => {
+                    let p = phons[i] ? `<p class="text-xs text-violet-500 dark:text-violet-400 font-mono mt-1">${phons[i]}</p>` : '';
+                    let safe = s.replace(/'/g, "\\'");
+                    return `
+                        <div class="flex items-center justify-between p-3.5 rounded-xl bg-white dark:bg-zinc-800/50 border border-gray-100 dark:border-zinc-700/50 shadow-sm">
+                            <div>
+                                <div id="pron-list-item-${i}" class="text-lg md:text-xl font-bold text-gray-800 dark:text-white">${s}</div>
+                                ${p}
+                            </div>
+                            <button onclick="doSpeak('${safe}')" class="w-11 h-11 rounded-full bg-violet-600 hover:bg-violet-500 text-white flex items-center justify-center shrink-0 shadow-md cursor-pointer relative z-20">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                        </div>
+                    `;
+                }).join('') + '</div>';
+            }
+        }
+
+        function togglePronHighlight() {
+            const task = state.currentPronunciationPractice[state.selectedPronunciationPracticeIndex];
+            const btnHL = getEl('btn-pron-highlight');
+            state.isPronHighlightOn = !state.isPronHighlightOn;
+
+            if (state.isPronHighlightOn) {
+                btnHL.className = "px-4 py-1.5 rounded-lg bg-amber-500 text-zinc-900 border border-amber-400 text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer ml-auto";
+                btnHL.innerHTML = `<i class="fa-solid fa-eye-slash"></i> Tắt Highlight`;
+            } else {
+                btnHL.className = "px-4 py-1.5 rounded-lg bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 text-amber-500 dark:text-amber-400 border border-gray-200 dark:border-zinc-700 text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer ml-auto";
+                btnHL.innerHTML = `<i class="fa-solid fa-highlighter"></i> Bật Highlight`;
+            }
+
+            if (task.title.includes("PART 3")) {
+                const sents = task.sentence.match(/[^.?!]+[.?!]+/g).map(s => s.trim());
+                const hls = task.highlighted.match(/[^.?!]+[.?!]+/g).map(s => s.trim());
+                sents.forEach((_, i) => {
+                    const el = getEl('pron-sent-' + i);
+                    if (el) el.innerHTML = state.isPronHighlightOn ? hls[i] : sents[i];
+                });
+            } else {
+                const sents = task.sentence.split('\n');
+                const hls = task.highlighted.split('\n');
+                sents.forEach((_, i) => {
+                    const el = getEl('pron-list-item-' + i);
+                    if (el) el.innerHTML = state.isPronHighlightOn ? hls[i] : sents[i];
+                });
+            }
+        }
+
+        let isPlayingSequence = false;
+
+        function togglePlaySequence() {
+            if (window.speechSynthesis.speaking && isPlayingSequence) {
+                window.speechSynthesis.cancel();
+                isPlayingSequence = false;
+                updatePlayButtonUI();
+                return;
+            }
+            isPlayingSequence = true;
+            updatePlayButtonUI();
+            playCurrentIndex();
+        }
+
+        function updatePlayButtonUI() {
+            const btn = getEl('btn-play-pause');
+            if (!btn) return;
+            if(isPlayingSequence) {
+                btn.innerHTML = '<i class="fa-solid fa-stop text-lg"></i>';
+                btn.classList.add('bg-red-500', 'hover:bg-red-600');
+                btn.classList.remove('bg-violet-600', 'hover:bg-violet-500');
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-play pl-1 text-lg"></i>';
+                btn.classList.remove('bg-red-500', 'hover:bg-red-600');
+                btn.classList.add('bg-violet-600', 'hover:bg-violet-500');
+            }
+        }
+
+        function readPrevious() {
+            if (state.currentSentenceIndex > 0) {
+                state.currentSentenceIndex--;
+                isPlayingSequence = true; updatePlayButtonUI();
+                playCurrentIndex();
+            }
+        }
+
+        function readCurrent() {
+            isPlayingSequence = true; updatePlayButtonUI();
+            playCurrentIndex();
+        }
+
+        function readNext() {
+            const task = state.currentPronunciationPractice[state.selectedPronunciationPracticeIndex];
+            const sents = task.sentence.match(/[^.?!]+[.?!]+/g);
+            if (sents && state.currentSentenceIndex < sents.length - 1) {
+                state.currentSentenceIndex++;
+                isPlayingSequence = true; updatePlayButtonUI();
+                playCurrentIndex();
+            }
+        }
+
+        function selectSentence(idx) {
+            state.currentSentenceIndex = idx;
+            isPlayingSequence = true; updatePlayButtonUI();
+            playCurrentIndex();
+        }
+
+        function playCurrentIndex() {
+            const task = state.currentPronunciationPractice[state.selectedPronunciationPracticeIndex];
+            const sents = task.sentence.match(/[^.?!]+[.?!]+/g).map(s => s.trim());
+            if (state.currentSentenceIndex >= sents.length) state.currentSentenceIndex = 0;
+            
+            const idx = state.currentSentenceIndex;
+            
+            sents.forEach((_, i) => {
+                const el = getEl('pron-sent-' + i);
+                if (el) el.classList.remove('bg-violet-200', 'dark:bg-violet-900/60', 'text-violet-900', 'dark:text-white', 'ring-2', 'ring-violet-500', 'rounded', 'px-1.5', 'py-0.5');
+            });
+            
+            const curEl = getEl('pron-sent-' + idx);
+            if (curEl) {
+                curEl.classList.add('bg-violet-200', 'dark:bg-violet-900/60', 'text-violet-900', 'dark:text-white', 'ring-2', 'ring-violet-500', 'rounded', 'px-1.5', 'py-0.5');
+                const headerOffset = 200;
+                const elementPosition = curEl.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+            }
+            
+            doSpeak(sents[idx], () => {
+                isPlayingSequence = false;
+                updatePlayButtonUI();
+            });
+        }
+
+        function doSpeak(text, onEndCallback = null) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-US';
+                u.rate = parseFloat(getEl('pron-speed-select').value);
+                
+                const gender = getEl('pron-voice-select').value;
+                const voices = window.speechSynthesis.getVoices();
+                let v = voices.find(voice => voice.lang.startsWith('en') && voice.name.toLowerCase().includes(gender));
+                if (!v) v = voices.find(voice => voice.lang.startsWith('en'));
+                if (v) u.voice = v;
+                
+                if (onEndCallback) {
+                    u.onend = onEndCallback;
+                }
+                
+                window.speechSynthesis.speak(u);
+            } else showToast("Trình duyệt không hỗ trợ Web Speech API.", "error");
+        }
+
+        function openResetModal() { getEl('modal-reset').classList.remove('hidden'); }
+        function closeResetModal() { getEl('modal-reset').classList.add('hidden'); }
+        function openExitModal() { getEl('modal-exit').classList.remove('hidden'); }
+        function closeExitModal() { getEl('modal-exit').classList.add('hidden'); }
+
+        function handleResetSession() {
+            closeResetModal();
+            if (state.activeTab === 'mcq') {
+                startPronunciationQuiz('mcq');
+                showToast("Đã xáo trộn và làm lại đề!");
+            } else if (state.activeTab === 'practice') {
+                startPronunciationQuiz('practice');
+                showToast("Đã làm mới bài thực hành!");
+            }
+        }
+
+        function confirmExit() {
+            closeExitModal();
+            switchView('dashboard');
+        }
+
+        window.onload = () => {
+            switchView('dashboard');
+            state.darkMode = true;
+            toggleDarkMode();
+            if ('speechSynthesis' in window) window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+        };
+    </script>
+</body>
+</html>
