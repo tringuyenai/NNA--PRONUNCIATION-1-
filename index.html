@@ -67,7 +67,27 @@
         
         <!-- DASHBOARD -->
         <div id="view-dashboard" class="space-y-8 animate-fadeIn">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- THEORY MCQ CARD -->
+                <div class="group bg-white dark:bg-[#1a1a24] rounded-2xl border border-gray-200 dark:border-zinc-800/80 p-6 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-start">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl shadow-inner border border-blue-100 dark:border-blue-900/30">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <h4 class="text-xl font-black text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">Lý Thuyết Phát Âm</h4>
+                            <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">Bộ 120 câu hỏi ôn tập lý thuyết toàn diện chia thành 6 chủ đề (Nguyên âm, Phụ âm, Trọng âm, Ngữ điệu...). Chọn từng phần để làm.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 dark:border-zinc-800/50">
+                        <button onclick="startPronunciationQuiz('theory')" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-black transition-all shadow flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-play"></i> BẮT ĐẦU ÔN TẬP
+                        </button>
+                    </div>
+                </div>
+
                 <!-- MCQ CARD -->
                 <div class="group bg-white dark:bg-[#1a1a24] rounded-2xl border border-gray-200 dark:border-zinc-800/80 p-6 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
                     <div class="space-y-4">
@@ -78,7 +98,7 @@
                         </div>
                         <div class="space-y-1.5">
                             <h4 class="text-xl font-black text-gray-900 dark:text-white group-hover:text-purple-600 transition-colors">Trắc Nghiệm IPA</h4>
-                            <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">Hệ thống 40 câu hỏi trắc nghiệm kiểm tra lý thuyết phát âm, dấu trọng âm và cách đọc các từ vựng cốt lõi. Chấm điểm lập tức.</p>
+                            <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">Hệ thống câu hỏi trắc nghiệm kiểm tra lý thuyết phát âm, dấu trọng âm và cách đọc các từ vựng cốt lõi. Trộn ngẫu nhiên.</p>
                         </div>
                     </div>
                     <div class="mt-6 pt-4 border-t border-gray-100 dark:border-zinc-800/50">
@@ -107,17 +127,39 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- IPA SOUNDS CARD -->
+                <div class="group bg-white dark:bg-[#1a1a24] rounded-2xl border border-gray-200 dark:border-zinc-800/80 p-6 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-start">
+                            <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shadow-inner border border-amber-100 dark:border-amber-900/30">
+                                <i class="fa-solid fa-ear-listen"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <h4 class="text-xl font-black text-gray-900 dark:text-white group-hover:text-amber-600 transition-colors">Bảng Âm Thanh IPA</h4>
+                            <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">Nghe mẫu phát âm chuẩn của 44 âm vị tiếng Anh, bao gồm các nguyên âm và phụ âm kèm từ vựng ví dụ minh họa.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 dark:border-zinc-800/50">
+                        <button onclick="startPronunciationQuiz('ipa')" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-black transition-all shadow flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-headphones"></i> NGHE PHÁT ÂM MẪU
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- MCQ QUIZ VIEW -->
+        <!-- MCQ QUIZ VIEW (Dùng chung cho Trắc nghiệm IPA và Lý thuyết) -->
         <div id="view-mcq-quiz" class="hidden animate-fadeIn">
             <div class="sticky top-16 z-30 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white/95 dark:bg-[#1a1a24]/95 backdrop-blur-md border border-gray-200 dark:border-zinc-800/80 shadow-sm">
                 <div class="space-y-1">
-                    <h3 class="text-sm font-extrabold dark:text-white text-purple-600 dark:text-purple-400">Trắc nghiệm IPA & Lý thuyết</h3>
+                    <h3 id="mcq-quiz-title" class="text-sm font-extrabold dark:text-white text-purple-600 dark:text-purple-400">Trắc nghiệm IPA & Lý thuyết</h3>
                     <p class="text-[10px] text-gray-500 dark:text-zinc-400">Chọn đáp án để xem giải thích chi tiết ngay lập tức.</p>
                 </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto">
+                <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
+                    <select id="theory-category-select" onchange="loadTheoryCategory()" class="hidden bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white border border-gray-200 dark:border-zinc-700 hover:border-violet-500 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-violet-500 cursor-pointer"></select>
+                    
                     <button id="btn-toggle-subtitles" onclick="toggleSubtitles()" class="px-3.5 py-2 rounded-xl bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-800/40 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shrink-0">
                         <i class="fa-solid fa-language"></i> Phụ đề
                     </button>
@@ -177,7 +219,7 @@
                     <div class="relative z-10 space-y-4">
                         <span class="inline-block px-2.5 py-1 bg-violet-600 text-white rounded font-black text-[9px] uppercase tracking-widest shadow-md" id="pron-task-title">Bài tập</span>
                         
-                        <div id="audio-controls" class="hidden flex items-center justify-center gap-3 m-0 mb-4 sticky top-[76px] z-40 bg-white/95 dark:bg-[#1f1f2e]/95 backdrop-blur-md p-3 rounded-2xl border border-gray-200 dark:border-zinc-700/80 shadow-md">
+                        <div id="audio-controls" class="hidden flex items-center justify-center gap-3 m-0 mb-4 sticky top-[152px] md:top-[88px] z-40 bg-white/95 dark:bg-[#1f1f2e]/95 backdrop-blur-md p-3 rounded-2xl border border-gray-200 dark:border-zinc-700/80 shadow-md">
                             <button onclick="readPrevious()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-violet-100 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 flex items-center justify-center transition-colors cursor-pointer" title="Câu trước">
                                 <i class="fa-solid fa-backward-step"></i>
                             </button>
@@ -192,12 +234,12 @@
                             </button>
                         </div>
 
-                        <div class="space-y-2 p-2">
+                        <div class="space-y-2 p-2 mt-4">
                             <div id="pron-target-sentence" class="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100 leading-relaxed max-h-96 overflow-y-auto pr-3"></div>
                             <p class="text-xs font-extrabold text-violet-600 dark:text-violet-400 font-mono tracking-wide hidden" id="pron-target-phonetic"></p>
                         </div>
 
-                        <div class="p-3.5 rounded-xl bg-white dark:bg-zinc-900/80 text-[11px] text-gray-700 dark:text-zinc-300 leading-relaxed border border-gray-200 dark:border-zinc-800 relative z-20">
+                        <div class="p-3.5 rounded-xl bg-white dark:bg-zinc-900/80 text-[11px] text-gray-700 dark:text-zinc-300 leading-relaxed border border-gray-200 dark:border-zinc-800 relative z-20 mt-4">
                             <strong class="text-violet-600 dark:text-violet-400"><i class="fa-solid fa-bullseye"></i> Mục tiêu:</strong> <span id="pron-task-guide"></span>
                         </div>
 
@@ -226,6 +268,25 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- IPA SOUNDS VIEW -->
+        <div id="view-ipa-chart" class="hidden animate-fadeIn space-y-6">
+            <div class="sticky top-16 z-30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white/95 dark:bg-[#1a1a24]/95 backdrop-blur-md border border-gray-200 dark:border-zinc-800/80 shadow-sm">
+                <div class="space-y-1">
+                    <h3 class="text-sm font-extrabold dark:text-white text-amber-600 dark:text-amber-400">Bảng Âm Thanh IPA</h3>
+                    <p class="text-[10px] text-gray-500 dark:text-zinc-400">Bấm vào từng âm để nghe AI đọc mẫu từ vựng đại diện chứa âm đó.</p>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
+                    <button onclick="openExitModal()" class="px-3.5 py-2 rounded-xl bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700 text-xs font-bold transition-all cursor-pointer shrink-0">
+                        Thoát
+                    </button>
+                </div>
+            </div>
+            
+            <div class="space-y-6" id="ipa-grid-container">
+                <!-- Data rendered by JS -->
             </div>
         </div>
 
@@ -272,430 +333,236 @@
         </div>
     </div>
 
+    <!-- DỮ LIỆU & LOGIC -->
     <script>
         const pronunciationQuestionsData = [
-            {
-                question: "How many phonemes are there in the English language?",
-                question_vi: "Có bao nhiêu âm vị trong tiếng Anh?",
-                options: ["About 24", "About 34", "About 44", "About 54"],
-                answer: 2,
-                explanation: "Có khoảng 44 âm vị trong tiếng Anh, bao gồm 24 phụ âm và 20 nguyên âm."
-            },
-            {
-                question: "How many vowel sounds are there in the English language?",
-                question_vi: "Có bao nhiêu nguyên âm trong tiếng Anh?",
-                options: ["About 20", "About 30", "About 40", "About 50"],
-                answer: 0,
-                explanation: "Hệ thống âm thanh tiếng Anh có xấp xỉ 20 nguyên âm, được chia thành nguyên âm đơn (monophthongs) và nguyên âm đôi (diphthongs)."
-            },
-            {
-                question: "“u” in “blue” is…",
-                question_vi: "Chữ \"u\" trong từ \"blue\" là…",
-                options: ["A phoneme", "A letter", "A consonant", "A syllable"],
-                answer: 1,
-                explanation: "Trong ngữ cảnh đánh vần (spelling), \"u\" chỉ là một chữ cái trong bảng chữ cái đại diện cho âm thanh khi viết."
-            },
-            {
-                question: "What is NOT an element of English pronunciation?",
-                question_vi: "Yếu tố nào KHÔNG thuộc về phát âm tiếng Anh?",
-                options: ["intonation", "phonemes", "spelling", "stress"],
-                answer: 2,
-                explanation: "Các yếu tố chính của phát âm bao gồm âm vị, ngữ điệu, trọng âm và lời nói nối. Đánh vần (spelling) không phải là một yếu tố của phát âm."
-            },
-            {
-                question: "Which of the following sounds is a short mid vowel sound?",
-                question_vi: "Âm nào dưới đây là nguyên âm giữa ngắn?",
-                options: ["/ə/", "/ɒ/", "/æ/", "/ɪ/"],
-                answer: 0,
-                explanation: "Nguyên âm giữa ngắn (/ə/ hoặc /e/) được tạo ra với vị trí lưỡi ở khoảng giữa cao và thấp trong khoang miệng."
-            },
-            {
-                question: "Which of the following words is pronounced as /tʃɪp/?",
-                question_vi: "Từ nào dưới đây được phát âm là /tʃɪp/?",
-                options: ["Ship", "Chip", "Cheap", "Sheep"],
-                answer: 1,
-                explanation: "Ship là /ʃɪp/, Sheep là /ʃiːp/, Cheap là /tʃiːp/, còn Chip là /tʃɪp/."
-            },
-            {
-                question: "Choose the word with different vowel sound:",
-                question_vi: "Chọn từ có nguyên âm khác với các từ còn lại:",
-                options: ["Minor", "Rival", "Trivial", "Sign"],
-                answer: 2,
-                explanation: "Sign /saɪn/, Minor /ˈmaɪnər/, Rival /ˈraɪvəl/ đều mang âm /aɪ/, còn Trivial mang âm /ɪ/."
-            },
-            {
-                question: "Which word does NOT contain /ɪ/ sound?",
-                question_vi: "Từ nào KHÔNG chứa âm /ɪ/?",
-                options: ["Exam", "Erase", "Elect", "Else"],
-                answer: 3,
-                explanation: "Else phát âm là /els/, các từ còn lại đều bắt đầu bằng âm /ɪ/ (Erase /ɪˈreɪz/, Exam /ɪɡˈzæm/, Elect /ɪˈlɛkt/)."
-            },
-            {
-                question: "Which word has a long /ɑː/ sound?",
-                question_vi: "Từ nào chứa âm /ɑː/ dài?",
-                options: ["heard", "heart", "head", "happy"],
-                answer: 1,
-                explanation: "heart được phát âm là /hɑːt/, trong khi heard là /hɜːd/, happy là /ˈhæpi/, head là /hɛd/."
-            },
-            {
-                question: "What is the original spelling of /pi:s/?",
-                question_vi: "Cách viết đúng của phiên âm /pi:s/ là gì?",
-                options: ["peas", "peace", "pieces", "pierce"],
-                answer: 1,
-                explanation: "peace phát âm là /piːs/. Các từ khác có phiên âm khác: pieces /ˈpiːsɪz/, peas /piːz/, pierce /pɪəs/."
-            },
-            {
-                question: "Which word does the IPA transcription /sɔː/ represent?",
-                question_vi: "Phiên âm /sɔː/ đại diện cho từ nào?",
-                options: ["so", "saw", "sow", "sue"],
-                answer: 1,
-                explanation: "saw được phiên âm là /sɔː/. Các từ còn lại: so/sow là /səʊ/, sue là /suː/."
-            },
-            {
-                question: "Which word does NOT contain /i:/ sound?",
-                question_vi: "Từ nào KHÔNG chứa âm /i:/ dài?",
-                options: ["beam", "bread", "lead", "meat"],
-                answer: 1,
-                explanation: "bread phát âm là /brɛd/ (âm ngắn), các từ còn lại đều chứa âm /iː/ dài."
-            },
-            {
-                question: "Which word does the IPA transcription /ɪnˈdiː.sənt/ represent?",
-                question_vi: "Phiên âm /ɪnˈdiː.sənt/ đại diện cho từ nào?",
-                options: ["incident", "indigent", "indignant", "indecent"],
-                answer: 3,
-                explanation: "indecent phát âm là /ɪnˈdiː.sənt/. Các từ khác: incident /ˈɪn.sɪ.dənt/, indigent /ˈɪn.dɪ.dʒənt/, indignant /ɪnˈdɪɡ.nənt/."
-            },
-            {
-                question: "Choose the odd one out:",
-                question_vi: "Chọn từ khác biệt:",
-                options: ["about", "house", "down", "pause"],
-                answer: 3,
-                explanation: "pause mang âm /pɔːz/ (nguyên âm đơn dài), trong khi ba từ còn lại đều mang nguyên âm đôi /aʊ/."
-            },
-            {
-                question: "How are the triphthongs produced?",
-                question_vi: "Nguyên âm ba (triphthongs) được tạo ra như thế nào?",
-                options: ["Gliding from a vowel to a consonant.", "Adding /ə/ sound to some diphthongs.", "Saying two sounds quickly.", "Adding a vowel sound before a diphthong."],
-                answer: 1,
-                explanation: "Tam âm vị (triphthongs) được tạo ra bằng cách thêm âm /ə/ vào sau một số nguyên âm đôi."
-            },
-            {
-                question: "Which is NOT a rising diphthong?",
-                question_vi: "Âm nào KHÔNG phải là nguyên âm đôi hướng lên (rising diphthong)?",
-                options: ["/eɪ/", "/ɔɪ/", "/aʊ/", "/aɪ/"],
-                answer: 2,
-                explanation: "Các âm /eɪ/, /aɪ/, /ɔɪ/ là nguyên âm đôi hướng lên (lưỡi di chuyển từ thấp lên cao), trong khi /aʊ/ bắt đầu từ vị trí thấp và trượt đến vị trí cao hơn nhưng không thuộc nhóm rising."
-            },
-            {
-                question: "Which word does NOT contain /t/ sound?",
-                question_vi: "Từ nào KHÔNG chứa âm /t/?",
-                options: ["water", "wrestle", "looked", "letter"],
-                answer: 1,
-                explanation: "Trong từ wrestle, chữ \"t\" là âm câm (/ˈres.əl/). Trong khi đó looked kết thúc bằng âm /t/ (/lʊkt/)."
-            },
-            {
-                question: "Which word does NOT contain the /d/ sound?",
-                question_vi: "Từ nào KHÔNG chứa âm /d/?",
-                options: ["watched", "rained", "called", "damaged"],
-                answer: 0,
-                explanation: "watched phát âm kết thúc bằng âm /t/ (/wɒtʃt/), các từ còn lại đều kết thúc bằng âm /d/."
-            },
-            {
-                question: "Which word does the IPA transcription /θɪŋk/ represent?",
-                question_vi: "Phiên âm /θɪŋk/ đại diện cho từ nào?",
-                options: ["sink", "thick", "think", "thing"],
-                answer: 2,
-                explanation: "think là /θɪŋk/. Các từ khác: sink /sɪŋk/, thing /θɪŋ/, thick /θɪk/."
-            },
-            {
-                question: "Which of the following sound is voiced?",
-                question_vi: "Âm nào dưới đây là âm hữu thanh (voiced)?",
-                options: ["/f/", "/v/", "/k/", "/p/"],
-                answer: 1,
-                explanation: "Âm hữu thanh (voiced) được tạo ra với sự rung của dây thanh quản. /v/ là âm hữu thanh, còn /p/, /f/, /k/ là âm vô thanh."
-            },
-            {
-                question: "Which is an example of a phonetic transcription?",
-                question_vi: "Ví dụ nào dưới đây là một phiên âm?",
-                options: ["/beautiful/", "/ˈbjuː/tɪ/fəl/", "/ˈbjuː.tɪ.fəl/", "(bjuː.tɪ.fəl)"],
-                answer: 2,
-                explanation: "Lựa chọn /ˈbjuː.tɪ.fəl/ là phiên âm đúng sử dụng Bảng ký hiệu ngữ âm quốc tế (IPA)."
-            },
-            {
-                question: "What is the phonetic notation system used to represent all of the phones in human language?",
-                question_vi: "Hệ thống ký hiệu ngữ âm nào được sử dụng để biểu diễn tất cả các âm thanh trong ngôn ngữ con người?",
-                options: ["API", "IPA", "IAP", "APA"],
-                answer: 1,
-                explanation: "Hệ thống ký hiệu ngữ âm dùng để biểu diễn tất cả các âm thanh là Bảng ký hiệu ngữ âm quốc tế (IPA)."
-            },
-            {
-                question: "How many monophthongs are there in the English language?",
-                question_vi: "Có bao nhiêu nguyên âm đơn trong tiếng Anh?",
-                options: ["12", "4", "8", "16"],
-                answer: 0,
-                explanation: "Trong tiếng Anh có 12 nguyên âm đơn (nguyên âm thuần)."
-            },
-            {
-                question: "How many consonant sounds are there in the English language?",
-                question_vi: "Có bao nhiêu phụ âm trong tiếng Anh?",
-                options: ["About 34", "About 24", "About 54", "About 44"],
-                answer: 1,
-                explanation: "Trong tiếng Anh có khoảng 24 phụ âm."
-            },
-            {
-                question: "Which word has a short /ʌ/ sound?",
-                question_vi: "Từ nào chứa âm /ʌ/ ngắn?",
-                options: ["Fennel", "Finny", "Fanny", "Funnel"],
-                answer: 3,
-                explanation: "Phiên âm: Funnel /ˈfʌnəl/, Finny /ˈfɪni/, Fennel /ˈfɛnəl/, Fanny /ˈfæni/."
-            },
-            {
-                question: "What is the original spelling of /sʌn/?",
-                question_vi: "Cách viết đúng của phiên âm /sʌn/ là gì?",
-                options: ["Soon", "Sung", "Suns", "Son"],
-                answer: 3,
-                explanation: "Phiên âm: Son /sʌn/, Soon /suːn/, Sung /sʌŋ/, Suns /sʌnz/."
-            },
-            {
-                question: "Which of the following sounds is a short open vowel sound?",
-                question_vi: "Âm nào dưới đây là nguyên âm mở ngắn?",
-                options: ["/ə/", "/ʌ/", "/ʊ/", "/e/"],
-                answer: 1,
-                explanation: "Nguyên âm mở ngắn (/ɒ/, /ʌ/, hoặc /æ/) được tạo ra với vị trí lưỡi đặt thấp."
-            },
-            {
-                question: "Which of the following sounds is NOT a short open vowel sound?",
-                question_vi: "Âm nào dưới đây KHÔNG phải là nguyên âm mở ngắn?",
-                options: ["/ɒ/", "/æ/", "/ʌ/", "/ə/"],
-                answer: 3,
-                explanation: "Âm /ə/ không phải là nguyên âm mở ngắn. Đây là một nguyên âm giữa ngắn."
-            },
-            {
-                question: "Which word does NOT contain short /ʊ/ sound?",
-                question_vi: "Từ nào KHÔNG chứa âm /ʊ/ ngắn?",
-                options: ["Hood", "Food", "Book", "Look"],
-                answer: 1,
-                explanation: "Phiên âm: Book /bʊk/, Look /lʊk/, Food /fuːd/, Hood /hʊd/."
-            },
-            {
-                question: "Which of the following sounds is a short close vowel sound?",
-                question_vi: "Âm nào dưới đây là nguyên âm đóng ngắn?",
-                options: ["/ʌ/", "/ʊ/", "/e/", "/ə/"],
-                answer: 1,
-                explanation: "Nguyên âm đóng ngắn (/ɪ/ hoặc /ʊ/) được tạo ra với vị trí lưỡi đặt cao."
-            },
-            {
-                question: "Which word has a short /æ/ sound?",
-                question_vi: "Từ nào chứa âm /æ/ ngắn?",
-                options: ["Baht", "Babe", "Bait", "Bash"],
-                answer: 3,
-                explanation: "Phiên âm: Babe /beɪb/, Bait /beɪt/, Bash /bæʃ/, Baht /bɑːt/."
-            },
-            {
-                question: "What is the original spelling of /ɪkˈsɛpt/?",
-                question_vi: "Cách viết đúng của phiên âm /ɪkˈsɛpt/ là gì?",
-                options: ["Accept", "Escape", "Exceed", "Except"],
-                answer: 3,
-                explanation: "Phiên âm: Accept /əkˈsɛpt/, Exceed /ɪkˈsiːd/, Escape /ɪˈskeɪp/, Except /ɪkˈsɛpt/."
-            },
-            {
-                question: "Which category best describes the vowels /ǝ/ and /ɜː/?",
-                question_vi: "Nhóm nào mô tả đúng nhất nguyên âm /ǝ/ và /ɜː/?",
-                options: ["Back vowels", "Central vowels", "Diphthongs", "Front vowels"],
-                answer: 1,
-                explanation: "Cả hai nguyên âm /ǝ/ và /ɜː/ đều thuộc nhóm nguyên âm trung tâm (central vowels)."
-            },
-            {
-                question: "What best describes the tongue position for the /ɑː/ sound?",
-                question_vi: "Mô tả nào đúng nhất về vị trí lưỡi đối với âm /ɑː/?",
-                options: ["Low central position", "Mid back position", "Low back position", "Mid–low back position"],
-                answer: 2,
-                explanation: "Âm /ɑː/ được phát âm với vị trí lưỡi đặt thấp và lùi về phía sau khoang miệng."
-            },
-            {
-                question: "The vowels /iː/ and /i/ are classified as:",
-                question_vi: "Các nguyên âm /iː/ và /i/ được phân loại là:",
-                options: ["Back vowels", "Front vowels", "Mid vowels", "Central vowels"],
-                answer: 1,
-                explanation: "Các nguyên âm /iː/ và /i/ được phân loại là nguyên âm trước (front vowels)."
-            },
-            {
-                question: "Which of the following sounds is a long open vowel?",
-                question_vi: "Âm nào dưới đây là nguyên âm mở dài?",
-                options: ["/iː/", "/ɔː/", "/ɑː/", "/ɜː/"],
-                answer: 2,
-                explanation: "Âm /ɑː/ là một nguyên âm mở (thấp) phía sau."
-            },
-            {
-                question: "The vowels /uː/ and /ʊ/ are categorized as:",
-                question_vi: "Các âm /uː/ và /ʊ/ được phân loại là:",
-                options: ["Back vowels", "Central vowels", "Front vowels", "Diphthongs"],
-                answer: 0,
-                explanation: "Các âm /uː/ và /ʊ/ được xếp vào nhóm nguyên âm sau (back vowels)."
-            },
-            {
-                question: "Which of the following sounds is NOT a long close vowels?",
-                question_vi: "Âm nào dưới đây KHÔNG phải là nguyên âm đóng dài?",
-                options: ["/iː/", "/uː/", "/ɑː/"],
-                answer: 2,
-                explanation: "Âm /ɑː/ là nguyên âm mở (thấp) phía sau, không phải nguyên âm đóng."
-            },
-            {
-                question: "What is the primary characteristic of the vowels /ʌ/ and /ɑː/?",
-                question_vi: "Đặc điểm chính của các nguyên âm /ʌ/ và /ɑː/ là gì?",
-                options: ["They are open vowels", "They are front vowels", "They are close vowels", "They are diphthongs"],
-                answer: 0,
-                explanation: "Chúng là các nguyên âm mở, còn được gọi là nguyên âm thấp."
-            },
-            {
-                question: "Which word has a long /ɑː/ sound?",
-                question_vi: "Từ nào chứa âm /ɑː/ dài?",
-                options: ["heard", "heart", "head", "happy"],
-                answer: 1,
-                explanation: "Phiên âm: heart /hɑːt/, heard /hɜːd/, happy /ˈhæpi/, head /hɛd/."
-            },
-            {
-                question: "What is the IPA transcription for the word “knight”?",
-                question_vi: "Phiên âm IPA của từ “knight” là gì?",
-                options: ["/kənɪt/", "/naɪt/", "/nɪt/", "/knaɪt/"],
-                answer: 1,
-                explanation: "Từ 'knight' có âm 'k' câm, nên được phát âm là /naɪt/."
-            },
-            {
-                question: "Which is the correct transcription of the word \"ship\"?",
-                question_vi: "Phiên âm đúng của từ \"ship\" là gì?",
-                options: ["/ʒɪp/", "/siːp/", "/ʃɪp/", "/sip/"],
-                answer: 2,
-                explanation: "Từ 'ship' có âm s dài /ʃ/ và nguyên âm i ngắn /ɪ/, phát âm là /ʃɪp/."
-            },
-            {
-                question: "Which of the following correctly identifies affricate sounds?",
-                question_vi: "Lựa chọn nào sau đây xác định đúng các âm tắc xát (affricate)?",
-                options: ["/l/ and /r/ sounds", "/f/ and /v/ sounds", "/tʃ/ and /dʒ/ sounds", "/m/ and /n/ sounds"],
-                answer: 2,
-                explanation: "Âm tắc xát (affricate) được tạo ra bằng cách kết hợp một âm tắc và một âm xát, ví dụ như /tʃ/ (trong từ 'chair') và /dʒ/ (trong từ 'judge')."
-            },
-            {
-                question: "What characterizes fricative sounds in speech production?",
-                question_vi: "Đặc điểm của âm xát (fricative) khi phát âm là gì?",
-                options: ["Turbulent airflow created by partial constriction", "Complete closure of the nasal cavity", "Complete blockage of airflow followed by release", "Combination of stop and sliding sounds"],
-                answer: 0,
-                explanation: "Âm xát được tạo ra bằng cách ép luồng không khí qua một khe hẹp trong thanh quản, tạo ra luồng khí hỗn loạn (turbulent airflow). Ví dụ: /f/, /v/, /s/, /z/, /ʃ/, /ʒ/."
-            },
-            {
-                question: "Which is the ordinary spelling of /pleɪs/?",
-                question_vi: "Cách viết thông thường của phiên âm /pleɪs/ là gì?",
-                options: ["plate", "place", "plays", "phase"],
-                answer: 1,
-                explanation: "Từ 'place' được phát âm là /pleɪs/. Các từ khác: plays /pleɪz/, plate /pleɪt/, phase /feɪz/."
-            },
-            {
-                question: "Which word does NOT contain /ð/ sound?",
-                question_vi: "Từ nào KHÔNG chứa âm /ð/ (âm th rung)?",
-                options: ["there", "three", "these", "those"],
-                answer: 1,
-                explanation: "Từ 'three' chứa âm /θ/ (th vô thanh). Các từ còn lại đều chứa âm /ð/ (th hữu thanh)."
-            },
-            {
-                question: "What types of consonants are /p/ and /b/?",
-                question_vi: "Âm /p/ và /b/ thuộc loại phụ âm nào?",
-                options: ["Alveolar consonants", "Dental consonants", "Velar consonants", "Bilabial plosive consonants"],
-                answer: 3,
-                explanation: "Chúng là âm tắc hai môi (Bilabial plosive consonants) vì được tạo ra bằng cách chặn hoàn toàn luồng không khí bằng cả hai môi rồi bật ra."
-            },
-            {
-                question: "Which word has the /j/ sound at the beginning?",
-                question_vi: "Từ nào bắt đầu bằng âm /j/ (âm 'y')?",
-                options: ["year", "enjoy", "major", "judge"],
-                answer: 0,
-                explanation: "Từ 'year' phát âm là /jɪər/. Các từ khác chứa âm /dʒ/: enjoy /ɪnˈdʒɔɪ/, major /ˈmeɪdʒər/, judge /dʒʌdʒ/."
-            },
-            {
-                question: "How many nasal sounds are there in this sentence “The moon is shining tonight\"?",
-                question_vi: "Có bao nhiêu âm mũi trong câu “The moon is shining tonight\"?",
-                options: ["5", "3", "6", "4"],
-                answer: 0,
-                explanation: "Có 5 âm mũi: /m/ và /n/ trong 'moon', /n/ và /ŋ/ trong 'shining', /n/ trong 'tonight' (/ðə muːn ɪz ˈʃaɪnɪŋ təˈnaɪt/)."
-            },
-            {
-                question: "In the word \"singing\", which sonorant appears twice?",
-                question_vi: "Trong từ \"singing\", âm vang (sonorant) nào xuất hiện 2 lần?",
-                options: ["The nasal /ŋ/", "The glide /w/", "The liquid /l/", "The nasal /m/"],
-                answer: 0,
-                explanation: "Phiên âm của 'singing' là /ˈsɪŋ.ɪŋ/, trong đó âm mũi /ŋ/ xuất hiện ở cuối âm tiết thứ nhất và cuối âm tiết thứ hai."
-            },
-            {
-                question: "Which word does NOT contain /w/ sound?",
-                question_vi: "Từ nào KHÔNG chứa âm /w/?",
-                options: ["whale", "wind", "write", "which"],
-                answer: 2,
-                explanation: "Trong từ 'write', chữ 'w' bị câm (/raɪt/). Các từ còn lại đều có âm /w/."
-            },
-            {
-                question: "How many /w/ sounds can you find in this sentence “Who will wonder how we won?”",
-                question_vi: "Có bao nhiêu âm /w/ trong câu “Who will wonder how we won?”",
-                options: ["6", "3", "5", "4"],
-                answer: 3,
-                explanation: "Có 4 âm /w/ trong các từ: will, wonder, we, won. ('Who' phát âm là /huː/, 'how' là /haʊ/ không bắt đầu bằng /w/)."
-            },
-            {
-                question: "Which of these words does NOT contain the /j/ sound?",
-                question_vi: "Từ nào KHÔNG chứa âm /j/ (âm 'y')?",
-                options: ["jelly", "yellow", "yummy", "young"],
-                answer: 0,
-                explanation: "Từ 'jelly' bắt đầu bằng âm /dʒ/ (/ˈdʒɛli/). Các từ còn lại đều bắt đầu bằng âm /j/."
-            },
-            {
-                question: "How many nasal sounds are there in the word “morning”?",
-                question_vi: "Có bao nhiêu âm mũi trong từ “morning”?",
-                options: ["4", "1", "3", "2"],
-                answer: 2,
-                explanation: "Từ 'morning' có 3 âm mũi: âm /m/, âm /n/, và âm /ŋ/ (Phiên âm: /ˈmɔː.nɪŋ/)."
-            },
-            {
-                question: "In the word \"lamp\", which sequence of consonant types is correct?",
-                question_vi: "Trong từ \"lamp\", thứ tự các loại phụ âm nào sau đây là đúng?",
-                options: ["Liquid – glide – nasal", "Liquid – liquid – nasal", "Liquid – nasal – stop", "Liquid – nasal – glide"],
-                answer: 2,
-                explanation: "Trong từ 'lamp' (/læmp/): /l/ là âm lỏng (liquid), /m/ là âm mũi (nasal), và /p/ là âm tắc (stop)."
-            },
-            {
-                question: "Which word is pronounced as /wɒnt/?",
-                question_vi: "Từ nào được phát âm là /wɒnt/?",
-                options: ["went", "won't", "wand", "want"],
-                answer: 3,
-                explanation: "Từ 'want' phát âm là /wɒnt/."
-            }
+            { question: "How many phonemes are there in the English language?", question_vi: "Có bao nhiêu âm vị trong tiếng Anh?", options: ["About 24", "About 34", "About 44", "About 54"], answer: 2, explanation: "Có khoảng 44 âm vị trong tiếng Anh, bao gồm 24 phụ âm và 20 nguyên âm." },
+            { question: "How many vowel sounds are there in the English language?", question_vi: "Có bao nhiêu nguyên âm trong tiếng Anh?", options: ["About 20", "About 30", "About 40", "About 50"], answer: 0, explanation: "Hệ thống âm thanh tiếng Anh có xấp xỉ 20 nguyên âm, được chia thành nguyên âm đơn và nguyên âm đôi." },
+            { question: "“u” in “blue” is…", question_vi: "Chữ \"u\" trong từ \"blue\" là…", options: ["A phoneme", "A letter", "A consonant", "A syllable"], answer: 1, explanation: "Trong ngữ cảnh đánh vần, \"u\" chỉ là một chữ cái đại diện cho âm thanh." },
+            { question: "What is NOT an element of English pronunciation?", question_vi: "Yếu tố nào KHÔNG thuộc về phát âm tiếng Anh?", options: ["intonation", "phonemes", "spelling", "stress"], answer: 2, explanation: "Đánh vần (spelling) không phải là một yếu tố của phát âm." },
+            { question: "Which of the following sounds is a short mid vowel sound?", question_vi: "Âm nào dưới đây là nguyên âm giữa ngắn?", options: ["/ə/", "/ɒ/", "/æ/", "/ɪ/"], answer: 0, explanation: "Nguyên âm giữa ngắn (/ə/ hoặc /e/) được tạo ra với vị trí lưỡi ở khoảng giữa khoang miệng." },
+            { question: "Which of the following words is pronounced as /tʃɪp/?", question_vi: "Từ nào dưới đây được phát âm là /tʃɪp/?", options: ["Ship", "Chip", "Cheap", "Sheep"], answer: 1, explanation: "Chip là /tʃɪp/, Sheep là /ʃiːp/, Cheap là /tʃiːp/." },
+            { question: "Choose the word with different vowel sound:", question_vi: "Chọn từ có nguyên âm khác với các từ còn lại:", options: ["Minor", "Rival", "Trivial", "Sign"], answer: 2, explanation: "Trivial mang âm /ɪ/, các từ còn lại đều mang âm /aɪ/." },
+            { question: "Which word does NOT contain /ɪ/ sound?", question_vi: "Từ nào KHÔNG chứa âm /ɪ/?", options: ["Exam", "Erase", "Elect", "Else"], answer: 3, explanation: "Else phát âm là /els/, các từ còn lại đều bắt đầu bằng âm /ɪ/." },
+            { question: "Which word has a long /ɑː/ sound?", question_vi: "Từ nào chứa âm /ɑː/ dài?", options: ["heard", "heart", "head", "happy"], answer: 1, explanation: "heart được phát âm là /hɑːt/." },
+            { question: "What is the original spelling of /pi:s/?", question_vi: "Cách viết đúng của phiên âm /pi:s/ là gì?", options: ["peas", "peace", "pieces", "pierce"], answer: 1, explanation: "peace phát âm là /piːs/." },
+            { question: "Which word does the IPA transcription /sɔː/ represent?", question_vi: "Phiên âm /sɔː/ đại diện cho từ nào?", options: ["so", "saw", "sow", "sue"], answer: 1, explanation: "saw được phiên âm là /sɔː/." },
+            { question: "Which word does NOT contain /i:/ sound?", question_vi: "Từ nào KHÔNG chứa âm /i:/ dài?", options: ["beam", "bread", "lead", "meat"], answer: 1, explanation: "bread phát âm là /brɛd/ (âm ngắn)." },
+            { question: "Which word does the IPA transcription /ɪnˈdiː.sənt/ represent?", question_vi: "Phiên âm /ɪnˈdiː.sənt/ đại diện cho từ nào?", options: ["incident", "indigent", "indignant", "indecent"], answer: 3, explanation: "indecent phát âm là /ɪnˈdiː.sənt/." },
+            { question: "Choose the odd one out:", question_vi: "Chọn từ khác biệt:", options: ["about", "house", "down", "pause"], answer: 3, explanation: "pause mang âm /pɔːz/ (nguyên âm đơn dài), ba từ còn lại mang nguyên âm đôi /aʊ/." },
+            { question: "How are the triphthongs produced?", question_vi: "Nguyên âm ba (triphthongs) được tạo ra như thế nào?", options: ["Gliding from a vowel to a consonant.", "Adding /ə/ sound to some diphthongs.", "Saying two sounds quickly.", "Adding a vowel sound before a diphthong."], answer: 1, explanation: "Nguyên âm ba được tạo ra bằng cách thêm âm /ə/ vào sau một số nguyên âm đôi." },
+            { question: "Which is NOT a rising diphthong?", question_vi: "Âm nào KHÔNG phải là nguyên âm đôi hướng lên?", options: ["/eɪ/", "/ɔɪ/", "/aʊ/", "/aɪ/"], answer: 2, explanation: "/aʊ/ không thuộc nhóm rising diphthong." },
+            { question: "Which word does NOT contain /t/ sound?", question_vi: "Từ nào KHÔNG chứa âm /t/?", options: ["water", "wrestle", "looked", "letter"], answer: 1, explanation: "Trong từ wrestle, chữ 't' là âm câm (/ˈres.əl/)." },
+            { question: "Which word does NOT contain the /d/ sound?", question_vi: "Từ nào KHÔNG chứa âm /d/?", options: ["watched", "rained", "called", "damaged"], answer: 0, explanation: "watched phát âm kết thúc bằng âm /t/ (/wɒtʃt/)." },
+            { question: "Which word does the IPA transcription /θɪŋk/ represent?", question_vi: "Phiên âm /θɪŋk/ đại diện cho từ nào?", options: ["sink", "thick", "think", "thing"], answer: 2, explanation: "think là /θɪŋk/." },
+            { question: "Which of the following sound is voiced?", question_vi: "Âm nào dưới đây là âm hữu thanh?", options: ["/f/", "/v/", "/k/", "/p/"], answer: 1, explanation: "/v/ là âm hữu thanh, còn lại là âm vô thanh." },
+            { question: "Which word has a long /ɑː/ sound?", question_vi: "Từ nào chứa âm /ɑː/ dài?", options: ["heard", "heart", "head", "happy"], answer: 1, explanation: "heart được phát âm là /hɑːt/." },
+            { question: "What is the IPA transcription for the word “knight”?", question_vi: "Phiên âm IPA cho từ “knight” là gì?", options: ["/kənɪt/", "/naɪt/", "/nɪt/", "/knaɪt/"], answer: 1, explanation: "knight phát âm là /naɪt/, chữ k câm." },
+            { question: "Which is the correct transcription of the word \"sheep\"?", question_vi: "Phiên âm đúng của từ \"sheep\" là gì?", options: ["/ʒɪp/", "/siːp/", "/ʃiːp/", "/sip/"], answer: 2, explanation: "sheep phát âm là /ʃiːp/." },
+            { question: "Which of the following correctly identifies affricate sounds?", question_vi: "Nhóm nào dưới đây là các âm tắc xát (affricate)?", options: ["/l/ and /r/", "/f/ and /v/", "/tʃ/ and /dʒ/", "/m/ and /n/"], answer: 2, explanation: "Âm tắc xát (affricate) là sự kết hợp giữa âm tắc và âm xát, bao gồm /tʃ/ và /dʒ/." },
+            { question: "What characterizes fricative sounds in speech production?", question_vi: "Đặc điểm của âm xát (fricative) là gì?", options: ["Turbulent airflow created by partial constriction", "Complete closure of the nasal cavity", "Complete blockage of airflow followed by release", "Combination of stop and sliding sounds"], answer: 0, explanation: "Âm xát được tạo ra bằng cách đẩy luồng hơi qua khe hẹp tạo ra sự ma sát." },
+            { question: "Which is the ordinary spelling of /pleɪs/?", question_vi: "Cách viết thông thường của phiên âm /pleɪs/ là gì?", options: ["plate", "place", "plays", "phase"], answer: 1, explanation: "place phát âm là /pleɪs/. Plays là /pleɪz/." },
+            { question: "What types of consonants are /p/ and /b/?", question_vi: "Các âm /p/ và /b/ thuộc loại phụ âm nào?", options: ["Alveolar consonants", "Dental consonants", "Velar consonants", "Bilabial plosive consonants"], answer: 3, explanation: "Chúng là âm tắc hai môi (bilabial plosives), chặn hơi bằng 2 môi rồi bật ra." },
+            { question: "Which word has the /j/ sound at the beginning?", question_vi: "Từ nào có âm /j/ ở đầu?", options: ["year", "enjoy", "major", "judge"], answer: 0, explanation: "year phát âm là /jɪər/." },
+            { question: "How many nasal sounds are there in this sentence “The moon is shining tonight\"?", question_vi: "Có bao nhiêu âm mũi trong câu “The moon is shining tonight\"?", options: ["5", "3", "6", "4"], answer: 0, explanation: "moon (m, n), shining (n, ŋ), tonight (n). Tổng cộng 5 âm mũi." },
+            { question: "In the word \"singing\", which sonorant appears twice?", question_vi: "Trong từ \"singing\", âm vang (sonorant) nào xuất hiện 2 lần?", options: ["The nasal /ŋ/", "The glide /w/", "The liquid /l/", "The nasal /m/"], answer: 0, explanation: "singing phát âm là /ˈsɪŋ.ɪŋ/, có 2 âm /ŋ/." },
+            { question: "Which word does NOT contain /w/ sound?", question_vi: "Từ nào KHÔNG chứa âm /w/?", options: ["whale", "wind", "write", "which"], answer: 2, explanation: "write phát âm là /raɪt/, chữ w câm." },
+            { question: "How many /w/ sounds can you find in this sentence “Who will wonder how we won?”", question_vi: "Có bao nhiêu âm /w/ trong câu “Who will wonder how we won?”", options: ["6", "3", "5", "4"], answer: 3, explanation: "Who (không có), will (w), wonder (w), how (không có), we (w), won (w). Tổng cộng 4." },
+            { question: "Which of these words does NOT contain the /j/ sound?", question_vi: "Từ nào KHÔNG chứa âm /j/?", options: ["jelly", "yellow", "yummy", "young"], answer: 0, explanation: "jelly phát âm là /ˈdʒeli/, âm đầu là /dʒ/." },
+            { question: "How many nasal sounds are there in the word “morning”?", question_vi: "Có bao nhiêu âm mũi trong từ “morning”?", options: ["4", "1", "3", "2"], answer: 2, explanation: "morning /ˈmɔːnɪŋ/ chứa /m/, /n/, /ŋ/ (3 âm mũi)." },
+            { question: "In the word \"lamp\", which sequence of consonant types is correct?", question_vi: "Trong từ \"lamp\", thứ tự loại phụ âm nào đúng?", options: ["Liquid – glide – nasal", "Liquid – liquid – nasal", "Liquid – nasal – stop", "Liquid – nasal – glide"], answer: 2, explanation: "/l/ (liquid), /m/ (nasal), /p/ (stop)." },
+            { question: "Which word is pronounced as /wɒnt/?", question_vi: "Từ nào phát âm là /wɒnt/?", options: ["went", "won't", "wand", "want"], answer: 3, explanation: "want phát âm là /wɒnt/." },
+            { question: "Which is an example of a phonetic transcription?", question_vi: "Ví dụ nào sau đây là một phiên âm quốc tế?", options: ["/beautiful/", "/ˈbjuː/tɪ/fəl/", "/ˈbjuː.tɪ.fəl/", "(bjuː.tɪ.fəl)"], answer: 2, explanation: "Lựa chọn /ˈbjuː.tɪ.fəl/ là phiên âm sử dụng Bảng ký hiệu ngữ âm quốc tế (IPA). Nó hiển thị cách phát âm với từng ký hiệu đại diện cho một âm thanh cụ thể." },
+            { question: "What is the phonetic notation system used to represent all of the phones in human language?", question_vi: "Hệ thống ký hiệu ngữ âm nào được sử dụng để đại diện cho tất cả các âm trong ngôn ngữ của con người?", options: ["API", "IPA", "IAP", "APA"], answer: 1, explanation: "Hệ thống ký hiệu ngữ âm được sử dụng để đại diện cho tất cả các âm thanh trong ngôn ngữ của con người là Bảng ký hiệu ngữ âm quốc tế (IPA)." },
+            { question: "How many monophthongs are there in the English language?", question_vi: "Có bao nhiêu nguyên âm đơn (monophthongs) trong tiếng Anh?", options: ["12", "4", "8", "16"], answer: 0, explanation: "Trong tiếng Anh có 12 nguyên âm đơn. Nguyên âm đơn là những âm nguyên âm thuần túy có chất lượng âm thanh không đổi trong suốt quá trình phát âm." },
+            { question: "How many consonant sounds are there in the English language?", question_vi: "Có bao nhiêu âm phụ âm trong tiếng Anh?", options: ["About 34", "About 24", "About 54", "About 44"], answer: 1, explanation: "Trong tiếng Anh có khoảng 24 âm phụ âm. Những âm này có thể được phân loại dựa trên vị trí phát âm và cách thức phát âm." },
+            { question: "Which word has a short /ʌ/ sound?", question_vi: "Từ nào có âm /ʌ/ ngắn?", options: ["Fennel", "Finny", "Fanny", "Funnel"], answer: 3, explanation: "Funnel: /ˈfʌnəl/, Finny: /ˈfɪni/, Fennel: /ˈfɛnəl/, Fanny: /ˈfæni/." },
+            { question: "What is the original spelling of /sʌn/?", question_vi: "Cách viết gốc của từ có phiên âm /sʌn/ là gì?", options: ["Soon", "Sung", "Suns", "Son"], answer: 3, explanation: "Son: /sʌn/, Soon: /suːn/, Sung: /sʌŋ/, Suns: /sʌnz/." },
+            { question: "Which of the following sounds is a short open vowel sound?", question_vi: "Âm nào sau đây là nguyên âm mở ngắn?", options: ["/ə/", "/ʌ/", "/ʊ/", "/e/"], answer: 1, explanation: "Nguyên âm mở ngắn (/ɒ/ hoặc /ʌ/ hoặc /æ/) là âm được tạo ra với lưỡi đặt thấp (mở) trong khoang miệng và có thời lượng ngắn." },
+            { question: "Which of the following sounds is NOT a short open vowel sound?", question_vi: "Âm nào sau đây KHÔNG PHẢI là nguyên âm mở ngắn?", options: ["/ɒ/", "/æ/", "/ʌ/", "/ə/"], answer: 3, explanation: "/ə/ không phải là nguyên âm mở ngắn. Nó là nguyên âm giữa ngắn (short mid vowel). Các lựa chọn khác (/ʌ/, /ɒ/ và /æ/) là nguyên âm mở ngắn." },
+            { question: "Which word does NOT contain short /ʊ/ sound?", question_vi: "Từ nào KHÔNG CHỨA âm /ʊ/ ngắn?", options: ["Hood", "Food", "Book", "Look"], answer: 1, explanation: "Book: /bʊk/, Look: /lʊk/, Food: /fuːd/, Hood: /hʊd/." },
+            { question: "Which of the following sounds is a short close vowel sound?", question_vi: "Âm nào sau đây là nguyên âm đóng ngắn?", options: ["/ʌ/", "/ʊ/", "/e/", "/ə/"], answer: 1, explanation: "Nguyên âm đóng ngắn (/ɪ/ hoặc /ʊ/) là nguyên âm được tạo ra với lưỡi đặt cao (đóng) trong khoang miệng và có thời lượng ngắn." },
+            { question: "Which word has a short /æ/ sound?", question_vi: "Từ nào có âm /æ/ ngắn?", options: ["Baht", "Babe", "Bait", "Bash"], answer: 3, explanation: "Babe: /beɪb/, Bait: /beɪt/, Bash: /bæʃ/, Baht: /bɑːt/." },
+            { question: "What is the original spelling of /ɪkˈsɛpt/?", question_vi: "Cách viết gốc của từ có phiên âm /ɪkˈsɛpt/ là gì?", options: ["Accept", "Escape", "Exceed", "Except"], answer: 3, explanation: "Accept: /əkˈsɛpt/, Exceed: /ɪkˈsiːd/, Escape: /ɪˈskeɪp/, Except: /ɪkˈsɛpt/." },
+            { question: "Which category best describes the vowels /ǝ/ and /ɜː/?", question_vi: "Nhóm nào mô tả đúng nhất các nguyên âm /ǝ/ và /ɜː/?", options: ["Back vowels", "Central vowels", "Diphthongs", "Front vowels"], answer: 1, explanation: "Các nguyên âm /ǝ/ (schwa) và /ɜː/ (stressed schwa) đều thuộc nhóm nguyên âm giữa (central vowels)." },
+            { question: "What best describes the tongue position for the /ɑː/ sound?", question_vi: "Mô tả nào đúng nhất về vị trí của lưỡi đối với âm /ɑː/?", options: ["Low central position", "Mid back position", "Low back position", "Mid–low back position"], answer: 2, explanation: "Âm /ɑː/, như trong từ \"car\" hoặc \"father\", được tạo ra với lưỡi đặt thấp và lùi về phía sau khoang miệng." },
+            { question: "The vowels /iː/ and /i/ are classified as:", question_vi: "Các nguyên âm /iː/ và /i/ được phân loại là:", options: ["Back vowels", "Front vowels", "Mid vowels", "Central vowels"], answer: 1, explanation: "Các nguyên âm /iː/ và /i/ được phân loại là nguyên âm trước (front vowels). Chúng được tạo ra với lưỡi hướng về phía trước khoang miệng." },
+            { question: "Which of the following sounds is a long open vowel?", question_vi: "Âm nào sau đây là nguyên âm mở dài?", options: ["/iː/", "/ɔː/", "/ɑː/", "/ɜː/"], answer: 2, explanation: "/iː/ là nguyên âm trước đóng, /ɜː/ là nguyên âm giữa trung bình, và /ɔː/ là nguyên âm sau mở-trung bình tròn môi. Do đó /ɑː/ là nguyên âm mở dài." },
+            { question: "The vowels /uː/ and /ʊ/ are categorized as:", question_vi: "Các nguyên âm /uː/ và /ʊ/ được phân loại là:", options: ["Back vowels", "Central vowels", "Front vowels", "Diphthongs"], answer: 0, explanation: "Các âm /uː/ và /ʊ/ được phân loại là nguyên âm sau (back vowels), tạo ra với phần lưỡi nâng lên ở phía sau khoang miệng." },
+            { question: "Which of the following sounds is NOT a long close vowels?", question_vi: "Âm nào sau đây KHÔNG PHẢI là nguyên âm đóng dài?", options: ["/iː/", "/uː/", "/ɑː/", "/ɔː/"], answer: 2, explanation: "/iː/ là nguyên âm trước đóng, /uː/ là nguyên âm sau đóng, còn /ɑː/ là nguyên âm sau mở (open back vowel)." },
+            { question: "What is the primary characteristic of the vowels /ʌ/ and /ɑː/?", question_vi: "Đặc điểm chính của các nguyên âm /ʌ/ và /ɑː/ là gì?", options: ["They are open vowels", "They are front vowels", "They are close vowels", "They are diphthongs"], answer: 0, explanation: "Chúng là những nguyên âm mở, còn được gọi là nguyên âm thấp (low vowels), được phát âm với lưỡi hạ thấp tạo khoang họng mở rộng." },
+            { question: "Which word has a long /ɑː/ sound?", question_vi: "Từ nào chứa âm /ɑː/ dài?", options: ["heard", "heart", "head", "happy"], answer: 1, explanation: "heart: /hɑːt/, heard: /hɜːd/, happy: /ˈhæpi/, head: /hɛd/." }
         ];
 
+        const theoryQuestionsData = {
+            "PHẦN A - BASIC KNOWLEDGE": [
+                { question: "What is the main purpose of the International Phonetic Alphabet (IPA)?", question_vi: "Mục đích chính của Bảng ký hiệu ngữ âm quốc tế (IPA) là gì?", options: ["To explain English grammar", "To represent English sounds accurately", "To teach English vocabulary", "To improve writing skills"], answer: 1, explanation: "IPA là hệ thống ký hiệu chuẩn hóa dùng để biểu diễn âm thanh lời nói (phonemes). Giúp người học phát âm đúng bất kể cách viết." },
+                { question: "According to the document, English has a total of ______ phonemes.", question_vi: "Theo tài liệu, tiếng Anh có tổng cộng ______ âm vị.", options: ["40", "42", "44", "46"], answer: 2, explanation: "Tiếng Anh có 44 âm vị, bao gồm 20 nguyên âm và 24 phụ âm." },
+                { question: "How many vowels are included in the English sound system?", question_vi: "Có bao nhiêu nguyên âm trong hệ thống âm thanh tiếng Anh?", options: ["18", "19", "20", "24"], answer: 2, explanation: "Hệ thống nguyên âm được chia thành nguyên âm ngắn, dài, đôi và ba, với tổng cộng 20 âm vị nguyên âm." },
+                { question: "How many consonants are there in English?", question_vi: "Có bao nhiêu phụ âm trong tiếng Anh?", options: ["20", "22", "24", "26"], answer: 2, explanation: "Tiếng Anh có 24 âm vị phụ âm theo tài liệu." },
+                { question: "Which pronunciation feature focuses on individual speech sounds?", question_vi: "Đặc điểm phát âm nào tập trung vào các âm thanh lời nói riêng lẻ?", options: ["Segmental features", "Intonation", "Stress", "Rhythm"], answer: 0, explanation: "Segmental features (đặc điểm đoạn tính) nghiên cứu từng nguyên âm và phụ âm riêng lẻ." },
+                { question: "Which pronunciation feature studies stress and intonation?", question_vi: "Đặc điểm phát âm nào nghiên cứu trọng âm và ngữ điệu?", options: ["Segmental features", "Suprasegmental features", "Phonemes", "IPA"], answer: 1, explanation: "Suprasegmental features (đặc điểm siêu đoạn tính) bao gồm trọng âm, nhịp điệu, ngữ điệu và lời nói nối." },
+                { question: "Which of the following belongs to segmental features?", question_vi: "Yếu tố nào sau đây thuộc về đặc điểm đoạn tính (segmental features)?", options: ["Intonation", "Word stress", "Consonants", "Sentence stress"], answer: 2, explanation: "Đặc điểm đoạn tính chỉ bao gồm các nguyên âm và phụ âm (Consonants)." },
+                { question: "Which of the following belongs to suprasegmental features?", question_vi: "Yếu tố nào sau đây thuộc về đặc điểm siêu đoạn tính?", options: ["Short vowels", "Long vowels", "Connected speech", "Affricates"], answer: 2, explanation: "Lời nói nối (Connected speech) là một trong những đặc điểm siêu đoạn tính." },
+                { question: "Which statement is TRUE?", question_vi: "Khẳng định nào sau đây là ĐÚNG?", options: ["Pronunciation only includes vowels.", "Pronunciation only includes consonants.", "Pronunciation includes both segmental and suprasegmental features.", "Pronunciation only studies spelling."], answer: 2, explanation: "Hệ thống phát âm kết hợp cả đặc điểm cấp độ âm thanh (đoạn tính) và cấp độ lời nói (siêu đoạn tính)." },
+                { question: "Which of the following is NOT one of the four pronunciation components mentioned in the document?", question_vi: "Yếu tố nào KHÔNG nằm trong bốn thành phần phát âm được đề cập trong tài liệu?", options: ["Phonemes", "Stress", "Intonation", "Vocabulary"], answer: 3, explanation: "Từ vựng (Vocabulary) là kỹ năng ngôn ngữ, không phải là thành phần của phát âm." },
+                { question: "The abbreviation IPA stands for", question_vi: "Từ viết tắt IPA có nghĩa là", options: ["International Pronunciation Alphabet", "International Phonetic Alphabet", "International Phonics Association", "International Phoneme Alphabet"], answer: 1, explanation: "IPA là viết tắt của International Phonetic Alphabet (Bảng ký hiệu ngữ âm quốc tế)." },
+                { question: "Why is IPA useful for English learners?", question_vi: "Tại sao IPA lại hữu ích cho người học tiếng Anh?", options: ["It teaches grammar.", "It explains sentence patterns.", "It shows the correct pronunciation of words.", "It increases vocabulary automatically."], answer: 2, explanation: "IPA giúp người học phát âm từ chính xác, đặc biệt khi cách viết và cách phát âm khác nhau." },
+                { question: "Which pair belongs to segmental features?", question_vi: "Cặp nào sau đây thuộc về đặc điểm đoạn tính?", options: ["Stress + Intonation", "Rhythm + Linking", "Vowels + Consonants", "Sentence stress + Connected speech"], answer: 2, explanation: "Chỉ có nguyên âm (vowels) và phụ âm (consonants) mới là đặc điểm đoạn tính." },
+                { question: "Which pair belongs to suprasegmental features?", question_vi: "Cặp nào sau đây thuộc về đặc điểm siêu đoạn tính?", options: ["Stops + Fricatives", "Long vowels + Short vowels", "Stress + Intonation", "Nasals + Liquids"], answer: 2, explanation: "Trọng âm (Stress) và ngữ điệu (Intonation) hoạt động ở cấp độ cao hơn các âm thanh riêng lẻ." },
+                { question: "Which pronunciation component studies the rise and fall of the voice?", question_vi: "Thành phần phát âm nào nghiên cứu sự lên xuống của giọng nói?", options: ["Phonemes", "Stress", "Intonation", "Vowels"], answer: 2, explanation: "Ngữ điệu (Intonation) chỉ sự thay đổi độ cao của giọng (pitch) khi nói." },
+                { question: "Which pronunciation component studies changes between neighboring words in natural speech?", question_vi: "Thành phần phát âm nào nghiên cứu sự thay đổi giữa các từ lân cận trong lời nói tự nhiên?", options: ["Grammar", "Connected speech", "Vocabulary", "Word formation"], answer: 1, explanation: "Lời nói nối (Connected speech) bao gồm nối âm, chèn âm, nuốt âm và đồng hóa âm." },
+                { question: "A phoneme is best described as", question_vi: "Một âm vị (phoneme) được mô tả đúng nhất là", options: ["a letter", "a word", "the smallest unit of sound", "a sentence"], answer: 2, explanation: "Âm vị là đơn vị âm thanh nhỏ nhất có thể phân biệt ý nghĩa." },
+                { question: "Which statement about English pronunciation is FALSE?", question_vi: "Khẳng định nào về phát âm tiếng Anh là SAI?", options: ["It includes phonemes.", "It includes stress.", "It includes intonation.", "It only studies spelling."], answer: 3, explanation: "Phát âm tập trung vào âm thanh và ngôn ngữ nói, không chỉ đơn thuần là đánh vần." },
+                { question: "Which component helps listeners understand meaning through emphasis?", question_vi: "Thành phần nào giúp người nghe hiểu ý nghĩa thông qua sự nhấn mạnh?", options: ["Stress", "Alphabet", "Spelling", "Vocabulary"], answer: 0, explanation: "Trọng âm (Stress) làm nổi bật các âm tiết hoặc từ quan trọng, giúp lời nói rõ ràng và đôi khi thay đổi ý nhấn mạnh." },
+                { question: "Which summary best describes English pronunciation according to the document?", question_vi: "Bản tóm tắt nào mô tả đúng nhất phát âm tiếng Anh theo tài liệu?", options: ["It only studies vowels.", "It only studies consonants.", "It includes phonemes, stress, intonation and connected speech.", "It mainly studies English spelling."], answer: 2, explanation: "Tài liệu trình bày phát âm tiếng Anh là một hệ thống gồm âm vị, trọng âm, ngữ điệu và lời nói nối." }
+            ],
+            "PHẦN B - VOWELS": [
+                { question: "How many vowel phonemes are there in English according to the document?", question_vi: "Theo tài liệu, có bao nhiêu âm vị nguyên âm trong tiếng Anh?", options: ["18", "20", "22", "24"], answer: 1, explanation: "Theo tài liệu, tiếng Anh có 20 nguyên âm, bao gồm nguyên âm đơn ngắn, nguyên âm đơn dài, nguyên âm đôi và nguyên âm ba." },
+                { question: "How many short monophthongs are introduced?", question_vi: "Có bao nhiêu nguyên âm đơn ngắn được giới thiệu?", options: ["5", "6", "7", "8"], answer: 2, explanation: "Có 7 nguyên âm đơn ngắn (short monophthongs)." },
+                { question: "How many long monophthongs are introduced?", question_vi: "Có bao nhiêu nguyên âm đơn dài được giới thiệu?", options: ["4", "5", "6", "7"], answer: 1, explanation: "Có 5 nguyên âm đơn dài (long monophthongs)." },
+                { question: "Which symbol usually indicates a long vowel?", question_vi: "Ký hiệu nào thường biểu thị một nguyên âm dài?", options: ["'", ":", "-", ","], answer: 1, explanation: "Dấu ':' trong IPA biểu thị nguyên âm dài, ví dụ /iː/, /uː/." },
+                { question: "Which of the following is a short vowel?", question_vi: "Âm nào dưới đây là nguyên âm ngắn?", options: ["/iː/", "/uː/", "/æ/", "/ɑː/"], answer: 2, explanation: "/æ/ thuộc nhóm nguyên âm đơn ngắn. Các âm còn lại đều là nguyên âm dài." },
+                { question: "Which of the following is a long vowel?", question_vi: "Âm nào dưới đây là nguyên âm dài?", options: ["/ɪ/", "/æ/", "/ɔː/", "/ʌ/"], answer: 2, explanation: "/ɔː/ là nguyên âm dài." },
+                { question: "Which vowel is known as the Schwa?", question_vi: "Nguyên âm nào được gọi là âm Schwa?", options: ["/æ/", "/ə/", "/ʌ/", "/e/"], answer: 1, explanation: "Schwa chính là âm /ə/." },
+                { question: "Which statement about long vowels is TRUE?", question_vi: "Khẳng định nào về nguyên âm dài là ĐÚNG?", options: ["They are pronounced more quickly.", "They are always stressed.", "They are pronounced for a longer time.", "They never appear in English."], answer: 2, explanation: "Điểm khác biệt chính của nguyên âm dài là thời gian phát âm dài hơn." },
+                { question: "A diphthong consists of", question_vi: "Nguyên âm đôi bao gồm", options: ["one consonant", "one vowel only", "a smooth glide from one vowel to another", "three consonants"], answer: 2, explanation: "Nguyên âm đôi là sự chuyển mượt từ một nguyên âm sang nguyên âm khác trong cùng một âm tiết." },
+                { question: "How many diphthongs are introduced?", question_vi: "Có bao nhiêu nguyên âm đôi được giới thiệu?", options: ["6", "7", "8", "9"], answer: 2, explanation: "Theo tài liệu có 8 nguyên âm đôi." },
+                { question: "Which diphthong belongs to the centring group?", question_vi: "Nguyên âm đôi nào thuộc nhóm hướng tâm (centring)?", options: ["/aɪ/", "/eə/", "/ɔɪ/", "/aʊ/"], answer: 1, explanation: "Nhóm centring gồm: /eə/, /ɪə/, /ʊə/." },
+                { question: "Which diphthong belongs to the rising (closing) group?", question_vi: "Nguyên âm đôi nào thuộc nhóm hướng lên (closing)?", options: ["/eə/", "/ɪə/", "/aɪ/", "/ʊə/"], answer: 2, explanation: "Nhóm rising gồm: /aɪ/, /eɪ/, /ɔɪ/." },
+                { question: "Which diphthong belongs to the rounding group?", question_vi: "Nguyên âm đôi nào thuộc nhóm tròn môi (rounding)?", options: ["/əʊ/", "/ɪə/", "/eə/", "/ɔɪ/"], answer: 0, explanation: "Nhóm rounding gồm: /əʊ/, /aʊ/." },
+                { question: "How many triphthongs are introduced?", question_vi: "Có bao nhiêu nguyên âm ba được giới thiệu?", options: ["4", "5", "6", "7"], answer: 1, explanation: "Theo tài liệu có 5 nguyên âm ba." },
+                { question: "A triphthong is formed by", question_vi: "Nguyên âm ba được hình thành bởi", options: ["one short vowel", "one long vowel", "a diphthong followed by /ə/", "three consonants"], answer: 2, explanation: "Nguyên âm ba được hình thành từ 5 nguyên âm đôi + Schwa (/ə/)." },
+                { question: "Which of the following is a triphthong?", question_vi: "Âm nào dưới đây là một nguyên âm ba?", options: ["/eɪə/", "/aɪ/", "/ɔɪ/", "/əʊ/"], answer: 0, explanation: "/eɪə/ là một nguyên âm ba." },
+                { question: "Which word is mentioned in the document as an example containing /aɪə/?", question_vi: "Từ nào được đề cập như một ví dụ chứa âm /aɪə/?", options: ["Face", "Fire", "Boy", "House"], answer: 1, explanation: "Từ 'fire' có chứa âm /aɪə/." },
+                { question: "Which word is mentioned as an example containing /aʊə/?", question_vi: "Từ nào được đề cập như một ví dụ chứa âm /aʊə/?", options: ["Power", "Home", "Boy", "Chair"], answer: 0, explanation: "Từ 'power' có chứa âm /aʊə/." },
+                { question: "What is the biggest difference between a diphthong and a triphthong?", question_vi: "Điểm khác biệt lớn nhất giữa nguyên âm đôi và nguyên âm ba là gì?", options: ["A triphthong has three separate syllables.", "A triphthong contains one extra glide to /ə/.", "A diphthong is longer than a triphthong.", "There is no difference."], answer: 1, explanation: "Điểm khác biệt lớn nhất là nguyên âm ba có thêm một bước trượt cuối về /ə/." },
+                { question: "Which statement is TRUE?", question_vi: "Khẳng định nào sau đây là ĐÚNG?", options: ["Every vowel is a diphthong.", "Every long vowel is a triphthong.", "English vowels include monophthongs, diphthongs, and triphthongs.", "English has only short vowels."], answer: 2, explanation: "Theo tài liệu, hệ thống nguyên âm tiếng Anh bao gồm: Nguyên âm đơn ngắn, dài, nguyên âm đôi và ba." }
+            ],
+            "PHẦN C - CONSONANTS": [
+                { question: "According to the document, consonants are mainly classified based on ______.", question_vi: "Theo tài liệu, phụ âm chủ yếu được phân loại dựa trên ______.", options: ["spelling, stress, and intonation", "place of articulation, manner of articulation, and voicing", "vowels, consonants, and syllables", "grammar, vocabulary, and pronunciation"], answer: 1, explanation: "Phụ âm được phân loại dựa trên 3 tiêu chí: Nơi tạo âm (Place), Cách tạo âm (Manner) và Sự rung thanh đới (Voicing)." },
+                { question: "Which of the following is NOT one of the three classification criteria?", question_vi: "Yếu tố nào KHÔNG phải là một trong 3 tiêu chí phân loại phụ âm?", options: ["Place of articulation", "Manner of articulation", "Voicing", "Intonation"], answer: 3, explanation: "Intonation (Ngữ điệu) là đặc điểm siêu đoạn tính, không phải tiêu chí phân loại phụ âm." },
+                { question: "What does place of articulation describe?", question_vi: "Nơi tạo âm (Place of articulation) mô tả điều gì?", options: ["How long a sound is pronounced", "Where the sound is produced in the vocal tract", "Whether the sound is stressed", "How fast the sound is spoken"], answer: 1, explanation: "Place of articulation mô tả vị trí âm thanh được tạo ra trong hệ thống phát âm." },
+                { question: "What does manner of articulation describe?", question_vi: "Cách tạo âm (Manner of articulation) mô tả điều gì?", options: ["Where the tongue is placed", "How the airflow is modified to produce a sound", "Whether the sound is voiced", "How many syllables a word has"], answer: 1, explanation: "Manner of articulation mô tả cách luồng hơi được biến đổi để tạo ra âm." },
+                { question: "What does voicing refer to?", question_vi: "Voicing (Sự rung dây thanh) đề cập đến điều gì?", options: ["Mouth opening", "Tongue position", "Vocal cord vibration", "Lip rounding"], answer: 2, explanation: "Voicing cho biết dây thanh đới có rung khi phát âm hay không." },
+                { question: "Which group does /p/ belong to?", question_vi: "Âm /p/ thuộc nhóm nào?", options: ["Nasals", "Stops (Plosives)", "Liquids", "Glides"], answer: 1, explanation: "/p/ là một âm tắc (stop/plosive) vì luồng hơi bị chặn hoàn toàn rồi bật ra." },
+                { question: "Which sound is a fricative?", question_vi: "Âm nào là âm xát (fricative)?", options: ["/g/", "/f/", "/m/", "/l/"], answer: 1, explanation: "/f/ là âm xát (fricative)." },
+                { question: "Which pair consists entirely of affricates?", question_vi: "Cặp âm nào hoàn toàn là âm tắc xát (affricates)?", options: ["/p/ – /b/", "/m/ – /n/", "/tʃ/ – /dʒ/", "/f/ – /v/"], answer: 2, explanation: "Nhóm Affricates gồm: /tʃ/ và /dʒ/." },
+                { question: "Which sounds belong to the nasal group?", question_vi: "Các âm nào thuộc nhóm âm mũi (nasal)?", options: ["/f/, /v/, /h/", "/l/, /r/", "/m/, /n/, /ŋ/", "/w/, /j/"], answer: 2, explanation: "Ba âm mũi là: /m/, /n/, /ŋ/." },
+                { question: "Which sounds belong to the liquid group?", question_vi: "Các âm nào thuộc nhóm âm lỏng (liquid)?", options: ["/l/, /r/", "/m/, /n/", "/w/, /j/", "/f/, /v/"], answer: 0, explanation: "Liquids gồm: /l/ và /r/." },
+                { question: "Which sounds are glides (semivowels)?", question_vi: "Các âm nào là âm bán nguyên âm (glides)?", options: ["/l/, /r/", "/m/, /n/", "/w/, /j/", "/s/, /z/"], answer: 2, explanation: "Glides/Semivowels gồm: /w/ và /j/." },
+                { question: "Which statement about stops (plosives) is TRUE?", question_vi: "Khẳng định nào về âm tắc (stops) là ĐÚNG?", options: ["Air flows continuously through a narrow opening.", "Air is completely blocked and then released.", "Air only passes through the nose.", "The tongue never touches any part of the mouth."], answer: 1, explanation: "Đặc điểm của âm tắc là chặn hoàn toàn luồng hơi rồi bật mạnh ra." },
+                { question: "Which statement best describes fricatives?", question_vi: "Khẳng định nào mô tả đúng nhất âm xát (fricatives)?", options: ["Air passes through the nose.", "Air is completely blocked.", "Air passes through a narrow opening, creating friction.", "They are always voiced."], answer: 2, explanation: "Đặc điểm nổi bật của fricatives là luồng hơi ma sát qua khe hẹp." },
+                { question: "An affricate begins as a ______ and ends as a ______.", question_vi: "Một âm tắc xát bắt đầu như một ______ và kết thúc như một ______.", options: ["nasal – liquid", "stop – fricative", "glide – stop", "vowel – consonant"], answer: 1, explanation: "Affricate được tạo thành từ Stop + Fricative." },
+                { question: "Which group includes Stops, Fricatives, and Affricates?", question_vi: "Nhóm nào bao gồm các âm Stops, Fricatives, và Affricates?", options: ["Sonorants", "Obstruents", "Glides", "Liquids"], answer: 1, explanation: "Nhóm cản âm (Obstruents) gồm: Stops, Fricatives và Affricates." },
+                { question: "Which group includes Nasals, Liquids, and Glides?", question_vi: "Nhóm nào bao gồm các âm Nasals, Liquids, và Glides?", options: ["Obstruents", "Sonorants", "Stops", "Fricatives"], answer: 1, explanation: "Nhóm âm vang (Sonorants) gồm: Nasals, Liquids và Glides." },
+                { question: "A consonant cluster is", question_vi: "Một cụm phụ âm (consonant cluster) là", options: ["a group of vowels", "two or more consonants without a vowel between them", "two syllables together", "one consonant followed by one vowel"], answer: 1, explanation: "Cụm phụ âm là hai hoặc nhiều phụ âm đứng cạnh nhau, không có nguyên âm xen giữa." },
+                { question: "Which word contains a consonant cluster?", question_vi: "Từ nào chứa một cụm phụ âm?", options: ["apple", "blue", "idea", "open"], answer: 1, explanation: "Trong từ 'blue', /bl/ là một cụm phụ âm đầu." },
+                { question: "According to the document, consonant clusters may appear", question_vi: "Theo tài liệu, các cụm phụ âm có thể xuất hiện", options: ["only at the beginning of words", "only at the end of words", "only in the middle of words", "at the beginning, middle, or end of words"], answer: 3, explanation: "Tài liệu nêu rõ cụm phụ âm có thể xuất hiện ở đầu, giữa hoặc cuối từ." },
+                { question: "Which summary is CORRECT?", question_vi: "Tóm tắt nào sau đây là ĐÚNG?", options: ["Obstruents include nasals.", "Sonorants include stops.", "Obstruents include stops, fricatives, and affricates; sonorants include nasals, liquids, and glides.", "Stops and glides belong to the same major group."], answer: 2, explanation: "Phân loại chính: Obstruents = Stops + Fricatives + Affricates. Sonorants = Nasals + Liquids + Glides." }
+            ],
+            "PHẦN D - STRESS": [
+                { question: "What is word stress?", question_vi: "Trọng âm từ là gì?", options: ["Speaking every syllable equally.", "Emphasizing one syllable more than the others.", "Speaking more quickly.", "Connecting two words."], answer: 1, explanation: "Word stress là việc nhấn mạnh một âm tiết (đọc to hơn, dài hơn, cao hơn) so với các âm tiết khác." },
+                { question: "A stressed syllable is usually pronounced", question_vi: "Một âm tiết được nhấn trọng âm thường được phát âm", options: ["shorter and quieter", "louder, longer, and higher", "more softly", "more slowly but quietly"], answer: 1, explanation: "Âm tiết được nhấn thường to hơn (louder), dài hơn (longer) và cao hơn (higher)." },
+                { question: "According to the document, most two-syllable nouns are stressed on the", question_vi: "Theo tài liệu, hầu hết danh từ hai âm tiết có trọng âm rơi vào", options: ["first syllable", "second syllable", "last syllable only", "both syllables"], answer: 0, explanation: "Danh từ 2 âm tiết thường nhấn âm tiết đầu tiên." },
+                { question: "Most two-syllable adjectives are stressed on the", question_vi: "Hầu hết tính từ hai âm tiết có trọng âm rơi vào", options: ["first syllable", "second syllable", "last syllable", "middle syllable"], answer: 0, explanation: "Giống như danh từ, tính từ hai âm tiết thường nhấn âm đầu." },
+                { question: "Most two-syllable verbs are stressed on the", question_vi: "Hầu hết động từ hai âm tiết có trọng âm rơi vào", options: ["first syllable", "second syllable", "both syllables", "unstressed syllable"], answer: 1, explanation: "Động từ hai âm tiết thường nhấn âm tiết thứ hai." },
+                { question: "Words ending in -ic are usually stressed", question_vi: "Các từ kết thúc bằng đuôi -ic thường có trọng âm rơi vào", options: ["on the first syllable", "on the last syllable", "on the syllable before -ic", "equally on every syllable"], answer: 2, explanation: "Nhấn vào âm tiết ngay trước đuôi -ic (ví dụ: ecoNOMic)." },
+                { question: "Words ending in -tion usually receive stress", question_vi: "Các từ kết thúc bằng đuôi -tion thường nhận trọng âm ở", options: ["on the first syllable", "on the syllable before -tion", "on the last syllable", "no stress"], answer: 1, explanation: "Nhấn vào âm tiết ngay trước đuôi -tion (ví dụ: inforMAtion)." },
+                { question: "Words ending in -sion usually receive stress", question_vi: "Các từ kết thúc bằng đuôi -sion thường nhận trọng âm ở", options: ["before -sion", "after -sion", "on the first syllable", "on every syllable"], answer: 0, explanation: "Nhấn vào âm tiết ngay trước đuôi -sion, tương tự -tion." },
+                { question: "Sentence stress usually falls on", question_vi: "Trọng âm câu thường rơi vào", options: ["articles only", "prepositions only", "content words", "pronouns only"], answer: 2, explanation: "Trọng âm câu chủ yếu rơi vào các từ mang nội dung (content words)." },
+                { question: "Which of the following is normally a content word?", question_vi: "Từ nào dưới đây thường là một từ mang nội dung?", options: ["the", "and", "beautiful", "of"], answer: 2, explanation: "Content words gồm: Noun, main verb, adjective, adverb. 'Beautiful' là tính từ." },
+                { question: "Which word is usually a function word?", question_vi: "Từ nào dưới đây thường là từ chức năng?", options: ["computer", "quickly", "with", "interesting"], answer: 2, explanation: "Function words gồm: mạo từ, giới từ, đại từ... 'With' là giới từ." },
+                { question: "Which sentence is MOST likely to stress the word \"book\"?", question_vi: "Câu nào dưới đây có khả năng nhất nhấn trọng âm vào từ \"book\"?", options: ["I read a book yesterday.", "I am reading.", "She is the teacher.", "They were happy."], answer: 0, explanation: "'Book' là danh từ (content word) nên thường được nhấn." },
+                { question: "Contrastive stress is mainly used to", question_vi: "Trọng âm tương phản (contrastive stress) chủ yếu dùng để", options: ["shorten words", "connect sounds", "emphasize one idea over another", "create consonant clusters"], answer: 2, explanation: "Contrastive stress được dùng để nhấn mạnh sự đối lập hoặc sửa thông tin." },
+                { question: "In the sentence: \"I wanted the RED shirt, not the blue one.\" The stressed word shows", question_vi: "Trong câu: \"I wanted the RED shirt, not the blue one.\" Từ được nhấn mạnh thể hiện", options: ["pronunciation", "contrast", "linking", "grammar"], answer: 1, explanation: "RED được nhấn để đối lập (contrast) với BLUE." },
+                { question: "Which statement about sentence stress is TRUE?", question_vi: "Khẳng định nào về trọng âm câu là ĐÚNG?", options: ["Every word is stressed equally.", "Only nouns are stressed.", "Content words usually receive stress.", "Articles always receive stress."], answer: 2, explanation: "Trọng âm câu thường rơi vào các content words." },
+                { question: "Which group contains only content words?", question_vi: "Nhóm nào chỉ chứa các từ mang nội dung?", options: ["the – of – and", "he – she – it", "beautiful – study – teacher", "in – on – at"], answer: 2, explanation: "Nhóm C gồm Tính từ, Động từ, Danh từ." },
+                { question: "Which group contains only function words?", question_vi: "Nhóm nào chỉ chứa các từ chức năng?", options: ["table – book – chair", "run – swim – eat", "the – a – an", "happy – slowly – beautiful"], answer: 2, explanation: "Nhóm C gồm các mạo từ." },
+                { question: "Why is word stress important?", question_vi: "Tại sao trọng âm từ lại quan trọng?", options: ["It changes spelling.", "It makes pronunciation clearer and easier to understand.", "It changes grammar rules.", "It reduces vocabulary."], answer: 1, explanation: "Đặt trọng âm đúng giúp người nghe nhận diện từ chính xác và dễ hiểu hơn." },
+                { question: "Which pronunciation feature emphasizes important information in a sentence?", question_vi: "Đặc điểm phát âm nào nhấn mạnh thông tin quan trọng trong một câu?", options: ["Connected speech", "Word stress", "Contrastive stress", "Vowel length"], answer: 2, explanation: "Contrastive stress làm nổi bật thông tin mà người nói muốn nhấn mạnh." },
+                { question: "Which summary is CORRECT according to the document?", question_vi: "Tóm tắt nào là ĐÚNG theo tài liệu?", options: ["All words are stressed equally.", "Only nouns receive stress.", "Word stress, sentence stress, and contrastive stress are important aspects of English pronunciation.", "Stress only applies to long words."], answer: 2, explanation: "Tài liệu trình bày 3 nội dung chính: Word Stress, Sentence Stress, Contrastive Stress." }
+            ],
+            "PHẦN E - CONNECTED SPEECH": [
+                { question: "What is Connected Speech?", question_vi: "Lời nói nối (Connected Speech) là gì?", options: ["Speaking each word separately and clearly.", "The natural way sounds change and connect in continuous speech.", "Reading words one by one.", "Memorizing IPA symbols."], answer: 1, explanation: "Lời nói nối là cách âm thanh tự nhiên kết nối hoặc thay đổi khi nói liên tục." },
+                { question: "Which of the following is NOT a type of Connected Speech mentioned in the document?", question_vi: "Yếu tố nào KHÔNG phải là một dạng của Lời nói nối được đề cập trong tài liệu?", options: ["Linking", "Intrusion", "Assimilation", "Contraction"], answer: 3, explanation: "Tài liệu không liệt kê Contraction (Rút gọn) là một quá trình của lời nói nối." },
+                { question: "What is Linking?", question_vi: "Nối âm (Linking) là gì?", options: ["Deleting sounds.", "Changing stress.", "Connecting the final consonant of one word to the initial vowel of the next word.", "Adding a new syllable."], answer: 2, explanation: "Nối âm làm mượt lời nói bằng cách nối phụ âm cuối với nguyên âm đầu của từ tiếp theo." },
+                { question: "Why do speakers use Linking?", question_vi: "Tại sao người nói sử dụng Nối âm?", options: ["To make spelling easier.", "To make speech more natural and fluent.", "To increase the number of syllables.", "To change grammar."], answer: 1, explanation: "Nối âm giúp luồng lời nói tự nhiên và trôi chảy hơn." },
+                { question: "What is Intrusion?", question_vi: "Chèn âm (Intrusion) là gì?", options: ["Removing a consonant.", "Adding a sound such as /w/, /j/, or /r/ between words.", "Changing word order.", "Stressing every syllable."], answer: 1, explanation: "Chèn âm là thêm /w/, /j/ hoặc /r/ để nối các nguyên âm liền kề mượt mà hơn." },
+                { question: "Which sound is NOT mentioned as an intrusive sound?", question_vi: "Âm nào KHÔNG được đề cập như một âm chèn?", options: ["/w/", "/j/", "/r/", "/m/"], answer: 3, explanation: "Tài liệu chỉ đề cập /w/, /j/, /r/ là các âm chèn." },
+                { question: "What is Elision?", question_vi: "Nuốt âm (Elision) là gì?", options: ["Adding a sound.", "Removing or omitting a sound.", "Stressing a word.", "Changing intonation."], answer: 1, explanation: "Nuốt âm có nghĩa là bỏ qua một âm để việc phát âm dễ dàng hơn." },
+                { question: "According to the document, which sound is commonly omitted in him or her?", question_vi: "Theo tài liệu, âm nào thường bị nuốt trong từ 'him' hoặc 'her'?", options: ["/m/", "/h/", "/r/", "/ɜː/"], answer: 1, explanation: "Tài liệu đưa ví dụ nuốt âm /h/ trong các từ như him, her khi nói nhanh." },
+                { question: "What is Assimilation?", question_vi: "Đồng hóa âm (Assimilation) là gì?", options: ["Adding extra vowels.", "Changing one sound because of a neighboring sound.", "Changing sentence stress.", "Deleting whole words."], answer: 1, explanation: "Đồng hóa âm xảy ra khi một âm trở nên giống âm lân cận để dễ phát âm hơn." },
+                { question: "According to the document, miss you may be pronounced as", question_vi: "Theo tài liệu, 'miss you' có thể được phát âm thành", options: ["/mɪs juː/", "/mɪʃuː/", "/mɪzuː/", "/mɪtuː/"], answer: 1, explanation: "Tài liệu dùng miss you → /mɪʃuː/ làm ví dụ cho sự đồng hóa âm." },
+                { question: "Which Connected Speech process adds a sound?", question_vi: "Quá trình lời nói nối nào THÊM một âm?", options: ["Linking", "Intrusion", "Elision", "Assimilation"], answer: 1, explanation: "Chèn âm (Intrusion) là chèn thêm một âm phụ." },
+                { question: "Which Connected Speech process removes a sound?", question_vi: "Quá trình lời nói nối nào XÓA (bỏ) một âm?", options: ["Linking", "Intrusion", "Elision", "Assimilation"], answer: 2, explanation: "Nuốt âm (Elision) là bỏ qua một âm." },
+                { question: "Which Connected Speech process changes a sound?", question_vi: "Quá trình lời nói nối nào THAY ĐỔI một âm?", options: ["Linking", "Intrusion", "Elision", "Assimilation"], answer: 3, explanation: "Đồng hóa âm (Assimilation) thay đổi một âm thành âm khác." },
+                { question: "Which Connected Speech process mainly connects words?", question_vi: "Quá trình lời nói nối nào chủ yếu nhằm KẾT NỐI các từ?", options: ["Linking", "Elision", "Assimilation", "Stress"], answer: 0, explanation: "Nối âm (Linking) nối phụ âm cuối với nguyên âm đầu." },
+                { question: "Which pair correctly matches the process and its description?", question_vi: "Cặp nào ghép đúng giữa quá trình và mô tả của nó?", options: ["Linking – deleting sounds", "Elision – adding sounds", "Assimilation – changing sounds", "Intrusion – stressing sounds"], answer: 2, explanation: "Assimilation (Đồng hóa âm) = thay đổi âm (changing sounds)." },
+                { question: "Which example in the document demonstrates Elision?", question_vi: "Ví dụ nào trong tài liệu minh họa hiện tượng Nuốt âm?", options: ["/mɪʃuː/", "dropping /h/ in him", "adding /w/", "consonant cluster"], answer: 1, explanation: "Tài liệu chỉ ra việc bỏ âm /h/ trong him hoặc her là ví dụ của Elision." },
+                { question: "Which example demonstrates Linking?", question_vi: "Ví dụ nào minh họa hiện tượng Nối âm?", options: ["A final consonant joins the next word beginning with a vowel.", "A sound changes into another.", "A sound disappears.", "A word becomes stressed."], answer: 0, explanation: "Phụ âm cuối nối với từ tiếp theo bắt đầu bằng nguyên âm chính là Linking." },
+                { question: "Which statement is TRUE?", question_vi: "Khẳng định nào là ĐÚNG?", options: ["Connected Speech makes English sound less natural.", "Connected Speech only happens in slow speech.", "Connected Speech helps speech become smoother and more fluent.", "Connected Speech changes spelling."], answer: 2, explanation: "Lời nói nối giúp lời nói trở nên mượt mà và trôi chảy hơn." },
+                { question: "Which phenomenon involves inserting /w/, /j/, or /r/?", question_vi: "Hiện tượng nào liên quan đến việc chèn thêm /w/, /j/ hoặc /r/?", options: ["Linking", "Intrusion", "Elision", "Assimilation"], answer: 1, explanation: "Hiện tượng chèn thêm âm được gọi là Intrusion." },
+                { question: "Which summary best describes Connected Speech?", question_vi: "Bản tóm tắt nào mô tả đúng nhất Lời nói nối?", options: ["It only changes word stress.", "It only studies consonants.", "It includes Linking, Intrusion, Elision, and Assimilation to make spoken English more natural.", "It studies English spelling."], answer: 2, explanation: "Lời nói nối bao gồm Linking, Intrusion, Elision và Assimilation giúp tiếng Anh nói tự nhiên hơn." }
+            ],
+            "PHẦN F - INTONATION": [
+                { question: "What is intonation?", question_vi: "Ngữ điệu (Intonation) là gì?", options: ["The pronunciation of vowels.", "The rise and fall of the voice while speaking.", "The position of the tongue.", "The spelling of words."], answer: 1, explanation: "Ngữ điệu là sự lên xuống của giọng nói (độ cao - pitch) trong tiếng Anh." },
+                { question: "According to the document, intonation mainly helps speakers express", question_vi: "Theo tài liệu, ngữ điệu chủ yếu giúp người nói thể hiện", options: ["spelling", "grammar", "meaning and attitude", "handwriting"], answer: 2, explanation: "Ngoài việc truyền đạt thông tin, ngữ điệu thể hiện ý nghĩa, thái độ và cảm xúc." },
+                { question: "Which type of intonation usually ends with a falling pitch?", question_vi: "Loại ngữ điệu nào thường kết thúc bằng giọng đi xuống?", options: ["Falling Intonation", "Rising Intonation", "Fall–Rise Intonation", "Rise–Fall Intonation"], answer: 0, explanation: "Falling Intonation (Ngữ điệu xuống) kết thúc bằng độ cao giảm đi." },
+                { question: "Which type of intonation usually ends with a rising pitch?", question_vi: "Loại ngữ điệu nào thường kết thúc bằng giọng đi lên?", options: ["Falling Intonation", "Rising Intonation", "Rise–Fall Intonation", "None of the above"], answer: 1, explanation: "Rising Intonation (Ngữ điệu lên) kết thúc bằng độ cao tăng lên." },
+                { question: "Which type of intonation first falls and then rises?", question_vi: "Loại ngữ điệu nào đầu tiên xuống rồi sau đó đi lên?", options: ["Rising", "Falling", "Fall–Rise", "Rise–Fall"], answer: 2, explanation: "Fall-Rise: giọng đi xuống rồi đi lên trở lại." },
+                { question: "Which type of intonation first rises and then falls?", question_vi: "Loại ngữ điệu nào đầu tiên đi lên rồi sau đó đi xuống?", options: ["Rising", "Falling", "Fall–Rise", "Rise–Fall"], answer: 3, explanation: "Rise-Fall: giọng đi lên rồi đi xuống trở lại." },
+                { question: "According to the document, Wh- questions usually take", question_vi: "Theo tài liệu, câu hỏi Wh- thường dùng", options: ["Rising Intonation", "Falling Intonation", "Rise–Fall Intonation", "No intonation"], answer: 1, explanation: "Câu hỏi Wh- thường dùng ngữ điệu xuống (Falling Intonation)." },
+                { question: "Which type of question usually takes Rising Intonation?", question_vi: "Loại câu hỏi nào thường dùng Ngữ điệu đi lên?", options: ["Wh- questions", "Yes/No questions", "Commands", "Exclamations"], answer: 1, explanation: "Câu hỏi Yes/No thường dùng ngữ điệu lên ở cuối câu." },
+                { question: "Which sentence would most likely use Falling Intonation?", question_vi: "Câu nào dưới đây có khả năng nhất sử dụng Ngữ điệu đi xuống?", options: ["Are you ready?", "Where do you live?", "Do you like coffee?", "Can you help me?"], answer: 1, explanation: "'Where do you live?' là câu hỏi Wh- nên dùng Falling Intonation." },
+                { question: "Which sentence would most likely use Rising Intonation?", question_vi: "Câu nào dưới đây có khả năng nhất sử dụng Ngữ điệu đi lên?", options: ["What is your name?", "Where are you going?", "Is she coming?", "How old are you?"], answer: 2, explanation: "'Is she coming?' là câu hỏi Yes/No nên dùng Rising Intonation." },
+                { question: "Which sentence is most likely to end with Falling Intonation?", question_vi: "Câu nào có khả năng nhất kết thúc bằng Ngữ điệu đi xuống?", options: ["Please sit down.", "Are you a student?", "Would you like some tea?", "Is this your book?"], answer: 0, explanation: "Câu mệnh lệnh (Commands) thường dùng ngữ điệu xuống." },
+                { question: "Which sentence is most likely to use Rising Intonation?", question_vi: "Câu nào có khả năng nhất sử dụng Ngữ điệu đi lên?", options: ["Open your book.", "She is my teacher.", "Did you finish?", "This is wonderful."], answer: 2, explanation: "'Did you finish?' là câu hỏi Yes/No." },
+                { question: "Why is intonation important?", question_vi: "Tại sao ngữ điệu lại quan trọng?", options: ["It changes spelling.", "It helps listeners understand meaning and emotion.", "It changes vocabulary.", "It changes handwriting."], answer: 1, explanation: "Giúp người nghe hiểu được ý nghĩa ẩn chứa và cảm xúc của người nói." },
+                { question: "Which feature of pronunciation mainly deals with pitch movement?", question_vi: "Đặc điểm phát âm nào chủ yếu liên quan đến sự di chuyển cao độ giọng (pitch)?", options: ["Vowels", "Consonants", "Intonation", "Linking"], answer: 2, explanation: "Ngữ điệu (Intonation) liên quan trực tiếp đến pitch movement." },
+                { question: "Intonation is classified as", question_vi: "Ngữ điệu được phân loại là", options: ["a segmental feature", "a suprasegmental feature", "a consonant", "a vowel"], answer: 1, explanation: "Ngữ điệu thuộc về đặc điểm siêu đoạn tính (suprasegmental)." },
+                { question: "Which pair correctly matches the sentence type and common intonation?", question_vi: "Cặp nào ghép đúng loại câu và ngữ điệu phổ biến?", options: ["Yes/No question – Falling", "Wh-question – Rising", "Statement – Falling", "Command – Rising"], answer: 2, explanation: "Câu trần thuật (Statement) thường dùng ngữ điệu xuống (Falling)." },
+                { question: "Which statement about intonation is TRUE?", question_vi: "Khẳng định nào về ngữ điệu là ĐÚNG?", options: ["Every sentence has the same intonation.", "Intonation never changes meaning.", "Different intonation patterns can express different meanings or attitudes.", "Only native speakers use intonation."], answer: 2, explanation: "Các mẫu ngữ điệu khác nhau có thể biểu đạt các ý nghĩa hoặc thái độ khác nhau." },
+                { question: "Which type of intonation can express hesitation or uncertainty?", question_vi: "Kiểu ngữ điệu nào có thể thể hiện sự do dự hoặc không chắc chắn?", options: ["Falling", "Rising", "Fall–Rise", "None"], answer: 2, explanation: "Fall-Rise thường dùng để thể hiện sự do dự hoặc hàm ý chưa chắc chắn." },
+                { question: "Which type of intonation is often associated with strong feelings or surprise?", question_vi: "Kiểu ngữ điệu nào thường gắn liền với cảm xúc mạnh hoặc sự ngạc nhiên?", options: ["Rising", "Falling", "Rise–Fall", "Flat intonation"], answer: 2, explanation: "Rise-Fall thường thể hiện cảm xúc mạnh như ngạc nhiên, thích thú." },
+                { question: "Which summary best reflects the document?", question_vi: "Bản tóm tắt nào phản ánh đúng nhất tài liệu?", options: ["Intonation only changes pronunciation of vowels.", "Intonation is unnecessary in communication.", "English intonation includes Falling, Rising, Fall–Rise, and Rise–Fall patterns that help express meaning and attitude.", "Intonation only applies to questions."], answer: 2, explanation: "Ngữ điệu gồm 4 kiểu chính giúp thể hiện ý nghĩa và thái độ một cách hiệu quả." }
+            ]
+        };
         const pronunciationPracticeTasks = [
             {
                 title: "PART 1: Read aloud words and phrases",
-                sentence: "hatchery\nstrength\nidea\ntraffic\nextremes",
-                phonetic: "/ˈhætʃ.ər.i/\n/streŋθ/\n/aɪˈdiːə/\n/ˈtræf.ɪk/\n/ɪkˈstriːm/",
-                guide: "Đọc to các từ và cụm từ kèm theo phiên âm quốc tế (IPA).",
-                highlighted: "<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Hatch</span>ery\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Strength</span>\ni<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>De</span>a\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Traf</span>fic\nex<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Tremes</span>"
-            },
-            {
-                title: "PART 1: Read aloud words and phrases 2",
                 sentence: "safari\nbrother\nfavor\nstudent\nnext",
                 phonetic: "/səˈfɑː.ri/\n/ˈbrʌð.ər/\n/ˈfeɪ.vər/\n/ˈstuː.dənt/\n/nekst/",
                 guide: "Đọc to các từ và cụm từ kèm theo phiên âm quốc tế (IPA).",
                 highlighted: "sa<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Fa</span>ri\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Broth</span>er\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Fa</span>vor\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Stu</span>dent\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Next</span>"
             },
             {
-                title: "PART 2: Read aloud the following sentences",
-                sentence: "Did you finish your homework on time?\nWhat are you doing this weekend?\nYou are our new art teacher, aren’t you?\nPlease pass me the salt and pepper shakers.\nShe bought apples, oranges, and bananas from the market.",
-                phonetic: "Chú ý đến ngữ điệu và trọng âm",
-                guide: "Đọc to các câu sau, chú ý đến ngữ điệu và trọng âm câu.",
-                highlighted: "Did you <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fin</span>ish your <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>home</span>work on <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>time</span>?\nWhat are you <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>do</span>ing this <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>week</span>end?\nYou are our <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>new</span> <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>art</span> teacher, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ar</span>en’t you?\nPlease <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>pass</span> me the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>salt</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>pep</span>per shakers.\nShe bought <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ap</span>ples, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>or</span>anges, and ba<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>na</span>nas from the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>mar</span>ket."
+                title: "PART 1: Read aloud words and phrases 2",
+                sentence: "hatchery\nstrength\nidea\ntraffic\nextremes",
+                phonetic: "/ˈhætʃ.ər.i/\n/streŋθ/\n/aɪˈdiːə/\n/ˈtræf.ɪk/\n/ɪkˈstriːm/",
+                guide: "Đọc to các từ và cụm từ kèm theo phiên âm quốc tế (IPA).",
+                highlighted: "<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Hatch</span>ery\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Strength</span>\ni<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>De</span>a\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Traf</span>fic\nex<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Tremes</span>"
             },
             {
-                title: "PART 2: Read aloud the following sentences 2",
+                title: "PART 1: Read aloud words and phrases 3",
+                sentence: "piggy\nmother\nouter\nsecret\nprince",
+                phonetic: "/ˈpɪɡ.i/\n/ˈmʌð.ər/\n/ˈaʊ.tə/\n/ˈsiː.krət/\n/prɪns/",
+                guide: "Đọc to các từ và cụm từ kèm theo phiên âm quốc tế (IPA).",
+                highlighted: "<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Pig</span>gy\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Moth</span>er\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Out</span>er\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Se</span>cret\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Prince</span>"
+            },
+            {
+                title: "PART 2: Read aloud the following sentences",
                 sentence: "Is it going to snow tomorrow?\nHow did you solve that difficult problem?\nThey will arrive in about an hour.\nPlease close the door on your way out.\nWe visited London, Paris, Rome, and Berlin.",
                 phonetic: "Chú ý đến ngữ điệu và trọng âm",
                 guide: "Đọc to các câu sau, chú ý đến ngữ điệu và trọng âm câu.",
                 highlighted: "Is it going to <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>snow</span> to<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>mor</span>row?\nHow did you <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>solve</span> that <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>dif</span>ficult <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>prob</span>lem?\nThey will ar<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>rive</span> in a<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>bout</span> an <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hour</span>.\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Please</span> <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>close</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>door</span> on your <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>way</span> <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>out</span>.\nWe <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>vis</span>ited <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Lon</span>don, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Par</span>is, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Rome</span>, and Ber<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>lin</span>."
+            },
+            {
+                title: "PART 2: Read aloud the following sentences 2",
+                sentence: "Did you finish your homework on time?\nWhat are you doing this weekend?\nYou are our new art teacher, aren’t you?\nPlease pass me the salt and pepper shakers.\nShe bought apples, oranges, and bananas from the market.",
+                phonetic: "Chú ý đến ngữ điệu và trọng âm",
+                guide: "Đọc to các câu sau, chú ý đến ngữ điệu và trọng âm câu.",
+                highlighted: "Did you <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fin</span>ish your <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>home</span>work on <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>time</span>?\nWhat are you <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>do</span>ing this <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>week</span>end?\nYou are our <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>new</span> <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>art</span> teacher, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ar</span>en’t you?\nPlease <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>pass</span> me the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>salt</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>pep</span>per shakers.\nShe bought <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ap</span>ples, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>or</span>anges, and ba<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>na</span>nas from the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>mar</span>ket."
             },
             {
                 title: "PART 3: Passage 1 (Scarecrow)",
@@ -714,23 +581,71 @@
                 sentence: "A young boy named Tom loved exploring the woods near his home. He spent his days wandering through the trees, discovering new paths and hidden corners of the forest. One day, while venturing further than usual, he stumbled upon an old map tucked inside a hollow tree. The map led to a hidden treasure, and Tom's heart raced with excitement as he followed the clues. After hours of searching, he discovered an ancient chest filled with gold coins and jewels buried beneath a large oak tree. Overwhelmed with joy, Tom shared the treasure with his family, who used the wealth to improve their village. They built new houses, repaired the school, and created a beautiful park for everyone to enjoy. The villagers honored Tom for his bravery and generosity, and his discovery brought prosperity and happiness to the entire community.",
                 guide: "Đọc to đoạn văn ngắn để luyện khả năng phát âm trôi chảy và diễn cảm.",
                 highlighted: "A <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>young boy named Tom loved</span> ex<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>plor</span>ing the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>woods near</span> his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>home</span>. He <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>spent</span> his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>days wan</span>dering <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>through</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>trees</span>, dis<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cov</span>ering <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>new paths</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hid</span>den <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cor</span>ners of the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>for</span>est. One <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>day</span>, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>while ven</span>turing <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fur</span>ther than <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>u</span>sual, he <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>stum</span>bled up<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>on</span> an <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>old map tucked</span> in<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>side</span> a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hol</span>low <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>tree</span>. The <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>map led</span> to a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hid</span>den <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>treas</span>ure, and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Tom's heart raced</span> with ex<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cite</span>ment as he <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fol</span>lowed the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>clues</span>. <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Af</span>ter <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hours</span> of <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>search</span>ing, he dis<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cov</span>ered an <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>an</span>cient <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>chest filled</span> with <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>gold coins</span> and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>jew</span>els <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>bur</span>ied be<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>neath</span> a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>large oak tree</span>. Over<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>whelmed</span> with <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>joy</span>, <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Tom shared</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>treas</span>ure with his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>fam</span>ily, who <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>used</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>wealth</span> to im<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>prove</span> their <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>vil</span>lage. They <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>built new hous</span>es, re<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>paired</span> the <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>school</span>, and cre<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>at</span>ed a <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>beau</span>tiful <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>park</span> for <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>ev</span>eryone to en<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>joy</span>. The <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>vil</span>lagers <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hon</span>ored <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Tom</span> for his <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>brav</span>ery and gener<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>os</span>ity, and his dis<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>cov</span>ery <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>brought</span> pros<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>per</span>ity and <span class='text-blue-800 dark:text-amber-400 font-black uppercase'>hap</span>piness to the en<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>tire</span> com<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>mu</span>nity."
-            },
-            {
-                title: "PART 1: Read aloud words and phrases 3",
-                sentence: "piggy\nmother\nouter\nsecret\nprince",
-                phonetic: "/ˈpɪɡ.i/\n/ˈmʌð.ər/\n/ˈaʊ.tə/\n/ˈsiː.krət/\n/prɪns/",
-                guide: "Đọc to các từ và cụm từ kèm theo phiên âm quốc tế (IPA).",
-                highlighted: "<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Pig</span>gy\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Moth</span>er\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Out</span>er\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Se</span>cret\n<span class='text-blue-800 dark:text-amber-400 font-black uppercase'>Prince</span>"
             }
+        ];
+
+        const ipaData = [
+            { category: 'Nguyên âm đơn (Monophthongs)', sounds: [
+                { symbol: 'iː', speakAs: 'ee', words: ['sheep', 'see'] },
+                { symbol: 'ɪ', speakAs: 'ih', words: ['ship', 'it'] },
+                { symbol: 'ʊ', speakAs: 'uh', words: ['book', 'good'] },
+                { symbol: 'uː', speakAs: 'oo', words: ['shoot', 'blue'] },
+                { symbol: 'e', speakAs: 'eh', words: ['bed', 'red'] },
+                { symbol: 'ə', speakAs: 'uh', words: ['teacher', 'about'] },
+                { symbol: 'ɜː', speakAs: 'er', words: ['bird', 'word'] },
+                { symbol: 'ɔː', speakAs: 'or', words: ['door', 'more'] },
+                { symbol: 'æ', speakAs: 'a', words: ['cat', 'hat'] },
+                { symbol: 'ʌ', speakAs: 'uh', words: ['up', 'cup'] },
+                { symbol: 'ɑː', speakAs: 'ah', words: ['far', 'car'] },
+                { symbol: 'ɒ', speakAs: 'o', words: ['on', 'hot'] }
+            ]},
+            { category: 'Nguyên âm đôi (Diphthongs)', sounds: [
+                { symbol: 'ɪə', speakAs: 'ear', words: ['here', 'near'] },
+                { symbol: 'eɪ', speakAs: 'ay', words: ['wait', 'day'] },
+                { symbol: 'ʊə', speakAs: 'oo-er', words: ['tour', 'sure'] },
+                { symbol: 'ɔɪ', speakAs: 'oy', words: ['coin', 'boy'] },
+                { symbol: 'əʊ', speakAs: 'oh', words: ['show', 'go'] },
+                { symbol: 'eə', speakAs: 'air', words: ['hair', 'there'] },
+                { symbol: 'aɪ', speakAs: 'eye', words: ['my', 'high'] },
+                { symbol: 'aʊ', speakAs: 'ow', words: ['cow', 'how'] }
+            ]},
+            { category: 'Phụ âm (Consonants)', sounds: [
+                { symbol: 'p', speakAs: 'puh', words: ['pea', 'pen'] },
+                { symbol: 'b', speakAs: 'buh', words: ['boat', 'boy'] },
+                { symbol: 't', speakAs: 'tuh', words: ['tea', 'two'] },
+                { symbol: 'd', speakAs: 'duh', words: ['dog', 'day'] },
+                { symbol: 'tʃ', speakAs: 'chuh', words: ['cheese', 'chair'] },
+                { symbol: 'dʒ', speakAs: 'juh', words: ['june', 'job'] },
+                { symbol: 'k', speakAs: 'kuh', words: ['car', 'key'] },
+                { symbol: 'g', speakAs: 'guh', words: ['go', 'get'] },
+                { symbol: 'f', speakAs: 'fuh', words: ['fly', 'four'] },
+                { symbol: 'v', speakAs: 'vuh', words: ['video', 'very'] },
+                { symbol: 'θ', speakAs: 'thuh', words: ['think', 'three'] },
+                { symbol: 'ð', speakAs: 'the', words: ['this', 'that'] },
+                { symbol: 's', speakAs: 'suh', words: ['see', 'say'] },
+                { symbol: 'z', speakAs: 'zuh', words: ['zoo', 'zero'] },
+                { symbol: 'ʃ', speakAs: 'shuh', words: ['shall', 'she'] },
+                { symbol: 'ʒ', speakAs: 'zhuh', words: ['television', 'measure'] },
+                { symbol: 'm', speakAs: 'muh', words: ['man', 'me'] },
+                { symbol: 'n', speakAs: 'nuh', words: ['now', 'no'] },
+                { symbol: 'ŋ', speakAs: 'ng', words: ['sing', 'long'] },
+                { symbol: 'h', speakAs: 'huh', words: ['hat', 'he'] },
+                { symbol: 'l', speakAs: 'luh', words: ['love', 'look'] },
+                { symbol: 'r', speakAs: 'ruh', words: ['red', 'run'] },
+                { symbol: 'w', speakAs: 'wuh', words: ['wet', 'we'] },
+                { symbol: 'j', speakAs: 'yuh', words: ['yes', 'you'] }
+            ]}
         ];
 
         const state = {
             darkMode: false,
             activeTab: 'dashboard',
+            quizMode: 'mcq', // 'mcq' or 'theory'
             activeMcqQuestions: [],
             mcqAnswers: {}, 
             mcqFlags: {},
             showSubtitles: false,
+            currentTheoryCategory: "",
             currentPronunciationPractice: [],
             selectedPronunciationPracticeIndex: 0,
             isPronHighlightOn: false,
@@ -772,6 +687,9 @@
                 body.classList.add('bg-gray-50', 'text-gray-900');
                 themeToggle.innerHTML = `<svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>`;
             }
+            if (state.activeTab === 'practice') {
+                togglePronHighlight(); togglePronHighlight();
+            }
         }
 
         function getShuffledClone(arr) {
@@ -783,46 +701,127 @@
             return clone;
         }
 
-        function toggleSubtitles() {
-            state.showSubtitles = !state.showSubtitles;
-            const btn = getEl('btn-toggle-subtitles');
-            if (state.showSubtitles) {
-                btn.classList.add('bg-violet-600', 'text-white');
-                btn.classList.remove('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-700', 'dark:text-purple-300');
-            } else {
-                btn.classList.remove('bg-violet-600', 'text-white');
-                btn.classList.add('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-700', 'dark:text-purple-300');
-            }
-            renderQuestionsList();
-        }
-
         function switchView(view) {
             state.activeTab = view;
             getEl('view-dashboard').classList.add('hidden');
             getEl('view-mcq-quiz').classList.add('hidden');
             getEl('view-pronunciation-practice').classList.add('hidden');
+            getEl('view-ipa-chart').classList.add('hidden');
             
             if (view === 'dashboard') getEl('view-dashboard').classList.remove('hidden');
             else if (view === 'mcq') getEl('view-mcq-quiz').classList.remove('hidden');
             else if (view === 'practice') getEl('view-pronunciation-practice').classList.remove('hidden');
+            else if (view === 'ipa') getEl('view-ipa-chart').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        function populateTheorySelector() {
+            const select = getEl('theory-category-select');
+            select.innerHTML = Object.keys(theoryQuestionsData).map((cat) => 
+                `<option value="${cat}">${cat}</option>`
+            ).join('');
+        }
+
+        function loadTheoryCategory() {
+            state.currentTheoryCategory = getEl('theory-category-select').value;
+            state.activeMcqQuestions = getShuffledClone(theoryQuestionsData[state.currentTheoryCategory]);
+            state.mcqAnswers = {};
+            state.mcqFlags = {};
+            renderSidebarGrids();
+            renderQuestionsList();
+            updateLiveStats();
+        }
+
         function startPronunciationQuiz(mode) {
+            state.quizMode = mode;
+            state.mcqAnswers = {};
+            state.mcqFlags = {};
+
             if (mode === 'mcq') {
-                state.mcqAnswers = {};
-                state.mcqFlags = {};
+                getEl('mcq-quiz-title').innerText = "Trắc nghiệm IPA Tổng hợp";
+                getEl('theory-category-select').classList.add('hidden');
+                
                 state.activeMcqQuestions = getShuffledClone(pronunciationQuestionsData);
                 renderSidebarGrids();
                 renderQuestionsList();
                 updateLiveStats();
+                switchView('mcq');
+            } else if (mode === 'theory') {
+                getEl('mcq-quiz-title').innerText = "Ôn tập Lý Thuyết Theo Chủ Đề";
+                getEl('theory-category-select').classList.remove('hidden');
+                
+                populateTheorySelector();
+                loadTheoryCategory();
                 switchView('mcq');
             } else if (mode === 'practice') {
                 state.currentPronunciationPractice = getShuffledClone(pronunciationPracticeTasks);
                 populatePronunciationSelector();
                 loadSelectedPronunciationTask();
                 switchView('practice');
+            } else if (mode === 'ipa') {
+                renderIPAChart();
+                switchView('ipa');
             }
+        }
+
+        function renderIPAChart() {
+            const container = getEl('ipa-grid-container');
+            let html = '';
+            ipaData.forEach(section => {
+                html += `
+                    <div class="p-5 md:p-6 rounded-2xl bg-white dark:bg-[#1a1a24] border border-gray-200 dark:border-zinc-800/80 shadow-sm transition-all hover:shadow-md">
+                        <h4 class="text-sm md:text-base font-black text-amber-600 dark:text-amber-400 mb-4 border-b border-gray-100 dark:border-zinc-800 pb-2">${section.category}</h4>
+                        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+                            ${section.sounds.map(s => `
+                                <button onclick="playIPASound('${s.speakAs}', '${s.words[0]}', '${s.words[1]}')" class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 hover:border-amber-500 hover:bg-amber-50 dark:hover:bg-amber-950/30 transition-all cursor-pointer group">
+                                    <span class="text-xl md:text-2xl font-black text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">/${s.symbol}/</span>
+                                    <div class="flex flex-col items-center gap-0.5 mt-0.5">
+                                        <span class="text-[9px] md:text-[10px] text-gray-500 font-bold uppercase tracking-wide group-hover:text-amber-600 dark:group-hover:text-amber-400 leading-none">${s.words[0]}</span>
+                                        <span class="text-[9px] md:text-[10px] text-gray-500 font-bold uppercase tracking-wide group-hover:text-amber-600 dark:group-hover:text-amber-400 leading-none">${s.words[1]}</span>
+                                    </div>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function playIPASound(speakAs, word1, word2) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                
+                const u1 = new SpeechSynthesisUtterance(speakAs);
+                u1.lang = 'en-US';
+                u1.rate = 0.8;
+                window.speechSynthesis.speak(u1);
+                
+                const u2 = new SpeechSynthesisUtterance(word1);
+                u2.lang = 'en-US';
+                u2.rate = 0.75;
+                window.speechSynthesis.speak(u2);
+                
+                const u3 = new SpeechSynthesisUtterance(word2);
+                u3.lang = 'en-US';
+                u3.rate = 0.75;
+                window.speechSynthesis.speak(u3);
+            } else {
+                showToast("Trình duyệt không hỗ trợ Web Speech API.", "error");
+            }
+        }
+
+        function toggleSubtitles() {
+            state.showSubtitles = !state.showSubtitles;
+            const btn = getEl('btn-toggle-subtitles');
+            if (state.showSubtitles) {
+                btn.classList.add('bg-purple-600', 'text-white');
+                btn.classList.remove('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-700', 'dark:text-purple-300');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white');
+                btn.classList.add('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-700', 'dark:text-purple-300');
+            }
+            renderQuestionsList();
         }
 
         function handleSelectOption(qIdx, optIdx) {
@@ -923,14 +922,14 @@
                             <div class="flex items-center gap-2">
                                 <span class="font-extrabold text-sm text-violet-600 dark:text-violet-400">Câu ${idx + 1}:</span>
                                 <span id="feedback-badge-${idx}">
-                                    ${isAns ? (isCor ? '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">CHÍNH XÁC</span>' : '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-red-100 text-red-800">SAI RỒI</span>') : ''}
+                                    ${isAns ? (isCor ? '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-400">CHÍNH XÁC</span>' : '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-red-100 dark:bg-red-950/40 text-red-800 dark:text-red-400">SAI RỒI</span>') : ''}
                                 </span>
                             </div>
                         </div>
 
                         <div class="font-bold text-sm md:text-base text-gray-900 dark:text-white mb-4 leading-relaxed">
                             <span>${q.question}</span>
-                            ${state.showSubtitles && q.question_vi ? `<div class="text-xs md:text-sm text-violet-600 dark:text-violet-400 mt-1.5 italic">${q.question_vi}</div>` : ''}
+                            ${state.showSubtitles && q.question_vi ? `<div class="text-xs md:text-sm text-violet-600 dark:text-violet-400 mt-1.5 italic font-medium">${q.question_vi}</div>` : ''}
                         </div>
 
                         <div class="space-y-2.5">
@@ -1067,6 +1066,8 @@
             const btnHL = getEl('btn-pron-highlight');
             state.isPronHighlightOn = !state.isPronHighlightOn;
 
+            let highlightColor = state.darkMode ? "text-amber-400" : "text-blue-800";
+
             if (state.isPronHighlightOn) {
                 btnHL.className = "px-4 py-1.5 rounded-lg bg-amber-500 text-zinc-900 border border-amber-400 text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer ml-auto";
                 btnHL.innerHTML = `<i class="fa-solid fa-eye-slash"></i> Tắt Highlight`;
@@ -1077,14 +1078,20 @@
 
             if (task.title.includes("PART 3")) {
                 const sents = task.sentence.match(/[^.?!]+[.?!]+/g).map(s => s.trim());
-                const hls = task.highlighted.match(/[^.?!]+[.?!]+/g).map(s => s.trim());
+                let hls = task.highlighted.match(/[^.?!]+[.?!]+/g).map(s => s.trim());
+                
+                hls = hls.map(str => str.replace(/text-amber-400/g, highlightColor));
+
                 sents.forEach((_, i) => {
                     const el = getEl('pron-sent-' + i);
                     if (el) el.innerHTML = state.isPronHighlightOn ? hls[i] : sents[i];
                 });
             } else {
                 const sents = task.sentence.split('\n');
-                const hls = task.highlighted.split('\n');
+                let hls = task.highlighted.split('\n');
+                
+                hls = hls.map(str => str.replace(/text-amber-400/g, highlightColor));
+
                 sents.forEach((_, i) => {
                     const el = getEl('pron-list-item-' + i);
                     if (el) el.innerHTML = state.isPronHighlightOn ? hls[i] : sents[i];
@@ -1185,8 +1192,13 @@
                 
                 const gender = getEl('pron-voice-select').value;
                 const voices = window.speechSynthesis.getVoices();
+                
                 let v = voices.find(voice => voice.lang.startsWith('en') && voice.name.toLowerCase().includes(gender));
+                if (!v && gender === 'male') {
+                    v = voices.find(voice => voice.lang.startsWith('en') && (voice.name.toLowerCase().includes('david') || voice.name.toLowerCase().includes('guy') || voice.name.toLowerCase().includes('mark')));
+                }
                 if (!v) v = voices.find(voice => voice.lang.startsWith('en'));
+                
                 if (v) u.voice = v;
                 
                 if (onEndCallback) {
@@ -1205,7 +1217,10 @@
 
         function handleResetSession() {
             closeResetModal();
-            if (state.activeTab === 'mcq') {
+            if (state.quizMode === 'theory') {
+                loadTheoryCategory();
+                showToast("Đã xáo trộn và làm lại phần lý thuyết!");
+            } else if (state.quizMode === 'mcq') {
                 startPronunciationQuiz('mcq');
                 showToast("Đã xáo trộn và làm lại đề!");
             } else if (state.activeTab === 'practice') {
